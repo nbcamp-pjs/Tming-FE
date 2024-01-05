@@ -1,0 +1,15 @@
+@import './color';
+
+$pc-width: 1440px;
+$pc-padding-x: 240px;
+$pc-header-height: 72px;
+$pc-title: 48px;
+$pc-body: 22px;
+
+@function calculatePcVw($width) {
+  @return #{$width / $pc-width * 100}vw;
+}
+
+:export {
+  pcLargeWidth: $pc-width;
+}

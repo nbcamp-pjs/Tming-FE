@@ -1,0 +1,43 @@
+@import '/src/style/constants';
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  background-color: $white;
+  z-index: 10;
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  height: calculatePcVw(100px);
+
+  img {
+    height: calculatePcVw(100px);
+  }
+
+  .navWrapper {
+    display: flex;
+    gap: calculatePcVw(32px);
+
+    .navItem {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      color: $defaultColor;
+      font-size: calculatePcVw(16px);
+      line-height: calculatePcVw(24px);
+      letter-spacing: -0.01em;
+      width: calculatePcVw(128px);
+
+      &.current {
+        text-decoration: underline;
+        font-weight: 500;
+        letter-spacing: -0.03em;
+      }
+    }
+  }
+}
