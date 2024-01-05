@@ -39,7 +39,7 @@ jobs:
           AWS_S3_BUCKET: ${{ secrets.AWS_WWW_S3_BUCKET_NAME }}
           SOURCE_DIR: 'build/'
 
-      - name: Invalidate cache CloudFront of fandomstudio
+      - name: Invalidate cache CloudFront of tming-fe
         uses: chetan/invalidate-cloudfront-action@master
         env:
           DISTRIBUTION: ${{ secrets.AWS_WWW_CLOUDFRONT_DISTRIBUTION_ID }}
