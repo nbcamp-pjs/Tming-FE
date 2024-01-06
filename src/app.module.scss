@@ -1,0 +1,7 @@
+@import '/src/style/constants';
+
+.wrapper {
+  min-height: 100%;
+  position: relative;
+  padding-bottom: calculatePcVw(250px);
+}

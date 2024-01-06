@@ -4,6 +4,7 @@
   background-color: $black;
   color: $white;
   height: calculatePcVw(250px);
-  position : relative;
+  position : absolute;
+  width: 100%;
   bottom: 0;
 }
