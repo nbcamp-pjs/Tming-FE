@@ -15,6 +15,13 @@ jobs:
       - name: Checkout source code.
         uses: actions/checkout@master
 
+      - name: make .env.prod
+        if: contains(github.ref, 'develop') || contains(github.ref, 'main')
+        run: |
+          touch .env.prod
+          echo "${{ secrets.ENV_PROD }}" > .env.prod
+        shell: bash
+
       - name: Cache node modules  # node modules 캐싱
         id: node-cache
         uses: actions/cache@v2
@@ -29,7 +36,7 @@ jobs:
         run: npm ci
 
       - name: Build with Node
-        run: npm run build
+        run: npm run build:prod
         env:
           CI: false
 

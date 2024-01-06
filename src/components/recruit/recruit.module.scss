@@ -1,0 +1,5 @@
+@import '/src/style/constants';
+
+.wrapper {
+  margin-top: calculatePcVw(100px);
+}

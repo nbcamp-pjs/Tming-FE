@@ -1,0 +1,9 @@
+@import '/src/style/constants';
+
+.wrapper {
+  background-color: $black;
+  color: $white;
+  height: calculatePcVw(250px);
+  position : relative;
+  bottom: 0;
+}
