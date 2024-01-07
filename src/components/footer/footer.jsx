@@ -37,7 +37,7 @@ const Footer = () => {
   return (
       <div className={styles.wrapper}>
         <div className={styles.text}>
-          Spring is coming.<br/>
+          Tming: 사이드 프로젝트 팀원 모집 서비스<br/>
           내일배움캠프 Spring 3기 봄이오조팀
         </div>
         <div className={styles.members}>
