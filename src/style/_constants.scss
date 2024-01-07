@@ -2,9 +2,10 @@
 
 $pc-width: 1440px;
 $pc-padding-x: 240px;
-$pc-header-height: 72px;
+$pc-header: 16px;
 $pc-title: 48px;
 $pc-body: 22px;
+$pc-footer: 14px;
 
 @function calculatePcVw($width) {
   @return #{$width / $pc-width * 100}vw;

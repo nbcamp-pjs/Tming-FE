@@ -1,10 +1,46 @@
 @import '/src/style/constants';
 
 .wrapper {
-  background-color: $black;
-  color: $white;
-  height: calculatePcVw(250px);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  z-index: 10;
+  color: $defaultColor;
   position : absolute;
   width: 100%;
   bottom: 0;
+  border-top: 1px solid $defaultColor;
+  height: calculatePcVw(100px);
+  padding: calculatePcVw(50px);
+  font-size: calculatePcVw($pc-footer);
+
+  .text {
+
+  }
+
+  .members {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: calculatePcVw(15px);
+
+    .member {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+
+      .githubImage {
+        align-items: center;
+        height: calculatePcVw(25px);
+        cursor: pointer;
+
+        img {
+          height: calculatePcVw(25px);
+        }
+      }
+    }
+  }
 }

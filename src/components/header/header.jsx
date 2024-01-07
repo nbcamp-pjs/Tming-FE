@@ -59,18 +59,16 @@ const Header = () => {
   }
 
   return (
-      <div>
-        <div className={styles.wrapper}>
-          <img src={TmingLogo} alt="Tming Logo" style={{cursor: 'pointer'}} onClick={clickLogo}/>
-          <div className={styles.navWrapper}>
-            {navItems.map((navItem, index) => (
-                <Link to={navItem.path} key={index} target={navItem.target}
-                      className={`${styles.navItem} ${isCurrentPage(navItem.path) ? styles.current : ''}`}>
-                  {navItem.title}
-                </Link>
-            ))}
-            {user == null? getLoginPage(): getLogoutPage()}
-          </div>
+      <div className={styles.wrapper}>
+        <img src={TmingLogo} alt="Tming Logo" style={{cursor: 'pointer'}} onClick={clickLogo}/>
+        <div className={styles.navWrapper}>
+          {navItems.map((navItem, index) => (
+              <Link to={navItem.path} key={index} target={navItem.target}
+                    className={`${styles.navItem} ${isCurrentPage(navItem.path) ? styles.current : ''}`}>
+                {navItem.title}
+              </Link>
+          ))}
+          {user == null? getLoginPage(): getLogoutPage()}
         </div>
       </div>
   );

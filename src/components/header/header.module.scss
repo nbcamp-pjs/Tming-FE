@@ -1,6 +1,7 @@
 @import '/src/style/constants';
 
 .wrapper {
+  border-bottom: 1px solid $defaultColor;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -28,7 +29,7 @@
       align-items: center;
       text-decoration: none;
       color: $defaultColor;
-      font-size: calculatePcVw(16px);
+      font-size: calculatePcVw($pc-header);
       line-height: calculatePcVw(24px);
       letter-spacing: -0.01em;
       width: calculatePcVw(128px);

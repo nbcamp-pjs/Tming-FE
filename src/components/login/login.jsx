@@ -35,8 +35,8 @@ const Login = () => {
 
   return (
       <div>
-        <input type="text" onChange={onChangeEmail} value={email}/><br/>
-        <input type="password" onChange={onChangePassword} value={password}/><br/>
+        email: <input type="text" onChange={onChangeEmail} value={email}/><br/>
+        password: <input type="password" onChange={onChangePassword} value={password}/><br/>
         <button onClick={login}>login</button>
         <button onClick={signup}>signup</button>
       </div>
