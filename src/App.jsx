@@ -12,13 +12,13 @@ function App() {
   return (
     <div className={styles.wrapper}>
       <Header/>
-        <Routes>
-          <Route path="/" element={<Home/>}></Route>
-          <Route path="/login" element={<Login/>}></Route>
-          <Route path="/signup" element={<Signup/>}></Route>
-          <Route path="/recruit" element={<Recruit/>}></Route>
-          <Route path="/sample" element={<Sample/>}></Route>
-        </Routes>
+      <Routes>
+        <Route path="/" element={<Home/>}></Route>
+        <Route path="/login" element={<Login/>}></Route>
+        <Route path="/signup" element={<Signup/>}></Route>
+        <Route path="/recruit" element={<Recruit/>}></Route>
+        <Route path="/sample" element={<Sample/>}></Route>
+      </Routes>
       <Footer/>
     </div>
   );
