@@ -17,9 +17,7 @@ const Sample = () => {
   const saveSample = () => {
     insertSample(title, text)
     .then(res => {
-      const newSamples = [...samples];
-      newSamples.push({title: title, text: text});
-      setSamples(newSamples);
+      window.location.reload();
     })
     .finally(() => {
       setTitle('');
