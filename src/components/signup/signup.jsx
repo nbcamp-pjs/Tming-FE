@@ -1,6 +1,7 @@
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {signupUser} from '../../apis/user';
+import {jobs} from "../../utils/jobs";
 
 const Signup = () => {
   const [email, setEmail] = useState('')
@@ -43,11 +44,9 @@ const Signup = () => {
         password: <input type="password" onChange={onChangePassword} value={password}/><br/>
         username: <input type="text" onChange={onChangeUsername} value={username}/><br/>
         job: <select value={job} onChange={onChangeJob}>
-          <option value="BACKEND">Backend</option>
-          <option value="FRONTEND">Frontend</option>
-          <option value="IOS">iOS</option>
-          <option value="ANDROID">Android</option>
-          <option value="DESIGNER">Designer</option>
+          {jobs.map((job, idx) => {
+            return <option value={job.value}>{job.title}</option>
+          })}
         </select><br/>
         <button onClick={signup}>signup</button>
         <button onClick={login}>login</button>
