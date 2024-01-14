@@ -8,3 +8,15 @@ export const userState = atom({
   default: null,
   effects_UNSTABLE: [persistAtom]
 })
+
+export const accessTokenState = atom({
+  key: 'accessTokenState',
+  default: null,
+  effects_UNSTABLE: [persistAtom]
+})
+
+export const refreshTokenState = atom({
+  key: 'refreshTokenState',
+  default: null,
+  effects_UNSTABLE: [persistAtom]
+})

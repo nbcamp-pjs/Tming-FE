@@ -1,9 +1,13 @@
 $black: #000000;
 $white: #FFFFFF;
+$gray: #E9E9E9;
+$darkGray: #A9A9A9;
 $defaultColor: #6778CA;
 
 :export {
   black: $black;
   white: $white;
+  gray: $gray;
+  darkGray: $darkGray;
   defaultColor: $defaultColor;
 }

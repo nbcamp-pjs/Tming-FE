@@ -1,7 +1,9 @@
 import TmingLogo from './img/tming_logo.png'
 import Github from './img/github.png'
+import Talk from './img/talk.png'
 
 export {
   TmingLogo,
-  Github
+  Github,
+  Talk
 }
