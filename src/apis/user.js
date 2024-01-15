@@ -23,12 +23,27 @@ const loginUser = (email, password) => {
   })
 }
 
-const logoutUser = () => {
-  return instance.post('/v1/users/logout')
+const logoutUser = (accessToken, refreshToken) => {
+  return instance.post('/v1/users/logout', {
+    headers: {
+      AccessToken: accessToken,
+      RefreshToken: refreshToken
+    }
+  })
+}
+
+const getUserProfile = (userId, accessToken, refreshToken) => {
+  return instance.get(`/v1/users/${userId}`, {
+    headers: {
+      AccessToken: accessToken,
+      RefreshToken: refreshToken
+    }
+  });
 }
 
 export {
   signupUser,
   loginUser,
   logoutUser,
+  getUserProfile,
 }

@@ -12,8 +12,8 @@ const savePost = (data, accessToken, refreshToken) => {
     request: data
   }, {
     headers: {
-      'AccessToken': accessToken,
-      'RefreshToken': refreshToken
+      AccessToken: accessToken,
+      RefreshToken: refreshToken
     }
   })
 }
@@ -23,8 +23,8 @@ const updatePost = (data, accessToken, refreshToken) => {
     request: data
   }, {
     headers: {
-      'AccessToken': accessToken,
-      'RefreshToken': refreshToken
+      AccessToken: accessToken,
+      RefreshToken: refreshToken
     }
   })
 }
@@ -34,8 +34,8 @@ const deletePost = (data, accessToken, refreshToken) => {
     postDeleteReq: data
   }, {
     headers: {
-      'AccessToken': accessToken,
-      'RefreshToken': refreshToken
+      AccessToken: accessToken,
+      RefreshToken: refreshToken
     }
   })
 }
@@ -45,8 +45,8 @@ const likePost = (data, accessToken, refreshToken) => {
     postLikeReq: data
   }, {
     headers: {
-      'AccessToken': accessToken,
-      'RefreshToken': refreshToken
+      AccessToken: accessToken,
+      RefreshToken: refreshToken
     }
   })
 }
@@ -56,8 +56,8 @@ const unlikePost = (data, accessToken, refreshToken) => {
     postUnlikeReq: data
   }, {
     headers: {
-      'AccessToken': accessToken,
-      'RefreshToken': refreshToken
+      AccessToken: accessToken,
+      RefreshToken: refreshToken
     }
   })
 }

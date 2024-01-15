@@ -1,8 +1,8 @@
 import styles from './header.module.scss'
 import {TmingLogo} from "../../assets";
 import {Link, useLocation, useNavigate} from "react-router-dom";
-import {useRecoilState, useRecoilValue} from "recoil";
-import {userState} from "../../states";
+import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
+import {accessTokenState, refreshTokenState, userState} from "../../states";
 import {logoutUser} from "../../apis/user";
 
 const Header = () => {
@@ -29,6 +29,8 @@ const Header = () => {
   const {pathname} = useLocation()
   const navigate = useNavigate()
   const [user, setUser] = useRecoilState(userState)
+  const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
+  const [refreshToken, setRefreshToken] = useRecoilState(refreshTokenState)
 
   const isCurrentPage = (headerPath) => {
     return '/' + pathname.split('/')[1] === headerPath
@@ -39,10 +41,14 @@ const Header = () => {
   }
 
   const logout = () => {
-    logoutUser()
-    .then(res => {
-      setUser(null)
-    })
+    // TODO ADD request logout
+    // logoutUser()
+    // .then(res => {
+    //   setUser(null)
+    // })
+    setUser(null);
+    setAccessToken(null);
+    setRefreshToken(null);
   }
 
   const getLogoutPage = () => {

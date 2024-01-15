@@ -1,24 +1,35 @@
 import styles from './login.module.scss';
-import {useRecoilState} from "recoil";
-import {userState} from "../../states";
+import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
+import {accessTokenState, refreshTokenState, userState} from "../../states";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {loginUser} from '../../apis/user';
+import {getUserProfile, loginUser} from '../../apis/user';
 
 const Login = () => {
-  const [user, setUser] = useRecoilState(userState)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
+  const [user, setUser] = useRecoilState(userState)
+  const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
+  const [refreshToken, setRefreshToken] = useRecoilState(refreshTokenState)
 
   const login = () => {
-    console.log('email = '+ email);
-    console.log('password = '+ password);
     loginUser(email, password)
     .then(res => {
       alert('success login')
+      setAccessToken(res.headers.accesstoken)
+      setRefreshToken(res.headers.refreshtoken)
       setUser({email: email})
-      navigate('/')
+      getUserProfile(1, accessToken, refreshToken)
+      .then(res => {
+        console.log(res.data)
+        setUser(res.data.data);
+        navigate('/')
+      })
+    })
+    .catch(err => {
+      console.log(err)
+      alert('계정을 확인해주세요')
     })
   }
 
