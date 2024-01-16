@@ -3,6 +3,7 @@ $white: #FFFFFF;
 $gray: #E9E9E9;
 $darkGray: #A9A9A9;
 $defaultColor: #6778CA;
+$hoverBtnColor: #4E5982;
 
 :export {
   black: $black;
@@ -10,4 +11,5 @@ $defaultColor: #6778CA;
   gray: $gray;
   darkGray: $darkGray;
   defaultColor: $defaultColor;
+  hoverBtnColor: $hoverBtnColor;
 }

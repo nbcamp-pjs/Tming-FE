@@ -11,7 +11,7 @@ import ScrollToTop from "./utils/ScrollRestoration";
 
 function App() {
   return (
-    <div className={styles.wrapper}>
+    <div>
       <Header/>
       <ScrollToTop/>
       <Routes>
