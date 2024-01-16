@@ -151,7 +151,7 @@
 
         &.disabled {
           background: $gray;
-          color: white;
+          color: $black;
           filter: brightness(0.5);
           cursor: auto;
         }
