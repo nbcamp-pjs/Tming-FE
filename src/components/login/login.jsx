@@ -57,7 +57,7 @@ const Login = () => {
             <input type="password" onChange={onChangePassword} value={password} placeholder="password"/><br/>
           </div>
           <div className={styles.btns}>
-            <button className={styles.btn} onClick={login}>login</button>
+            <button className={styles.btn} onClick={login}>로그인</button>
           </div>
           <div className={styles.signup} onClick={signup}>
             회원가입
