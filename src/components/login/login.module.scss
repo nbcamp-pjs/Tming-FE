@@ -1,5 +1,98 @@
 @import '/src/style/constants';
 
 .wrapper {
+  width: 100%;
+  height: calculatePcVw(500px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
+  .inputs {
+    width: calculatePcVw(300px);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .email {
+      display: flex;
+      flex-direction: row;
+      justify-content: start;
+      align-items: center;
+      height: calculatePcVw(40px);
+
+      input {
+        width: calculatePcVw(300px);
+        height: 85%;
+        color: $black;
+        box-sizing: border-box;
+
+        &:focus {
+          outline-color: $defaultColor;
+        }
+      }
+    }
+
+    .password {
+      display: flex;
+      flex-direction: row;
+      justify-content: start;
+      align-items: center;
+      height: calculatePcVw(40px);
+
+      input {
+        width: calculatePcVw(300px);
+        height: 85%;
+        color: $black;
+        box-sizing: border-box;
+
+        &:focus {
+          outline-color: $defaultColor;
+        }
+      }
+    }
+
+    .btns {
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      gap: calculatePcVw(5px);
+      width: calculatePcVw(300px);
+
+      .btn {
+        height: calculatePcVw(35px);
+        border: 0;
+        border-radius: 10px;
+        outline: none;
+        background-color: $defaultColor;
+        color: $white;
+        font-size: 14px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $hoverBtnColor;
+        }
+
+        &.disabled {
+          background: $gray;
+          color: $black;
+          filter: brightness(0.5);
+          cursor: auto;
+        }
+      }
+    }
+
+    .signup {
+      text-align: end;
+      color: $darkGray;
+      font-size: 14px;
+      margin-top: calculatePcVw(10px);
+      cursor: pointer;
+
+      &:active {
+        color: $defaultColor;
+      }
+    }
+  }
 }

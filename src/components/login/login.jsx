@@ -49,10 +49,20 @@ const Login = () => {
 
   return (
       <div className={styles.wrapper}>
-        email: <input type="text" onChange={onChangeEmail} value={email}/><br/>
-        password: <input type="password" onChange={onChangePassword} value={password}/><br/>
-        <button onClick={login}>login</button>
-        <button onClick={signup}>signup</button>
+        <div className={styles.inputs}>
+          <div className={styles.email}>
+            <input type="text" onChange={onChangeEmail} value={email} placeholder="email"/><br/>
+          </div>
+          <div className={styles.password}>
+            <input type="password" onChange={onChangePassword} value={password} placeholder="password"/><br/>
+          </div>
+          <div className={styles.btns}>
+            <button className={styles.btn} onClick={login}>login</button>
+          </div>
+          <div className={styles.signup} onClick={signup}>
+            회원가입
+          </div>
+        </div>
       </div>
   )
 }
