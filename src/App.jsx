@@ -7,11 +7,13 @@ import Recruit from "./components/recruit/recruit";
 import Sample from "./components/sample/sample";
 import Login from "./components/login/login";
 import Signup from "./components/signup/signup";
+import ScrollToTop from "./utils/ScrollRestoration";
 
 function App() {
   return (
     <div className={styles.wrapper}>
       <Header/>
+      <ScrollToTop/>
       <Routes>
         <Route path="/" element={<Home/>}></Route>
         <Route path="/login" element={<Login/>}></Route>
