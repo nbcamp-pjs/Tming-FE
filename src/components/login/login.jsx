@@ -15,21 +15,23 @@ const Login = () => {
 
   const login = () => {
     loginUser(email, password)
-    .then(res => {
-      alert('success login')
-      setAccessToken(res.headers.accesstoken)
-      setRefreshToken(res.headers.refreshtoken)
-      setUser({email: email})
-      getUserProfile(1, accessToken, refreshToken)
-      .then(res => {
-        console.log(res.data)
-        setUser(res.data.data);
+    .then(res1 => {
+      setAccessToken(res1.headers.accesstoken)
+      setRefreshToken(res1.headers.refreshtoken)
+      getUserProfile(res1.data.data.userId, accessToken, refreshToken)
+      .then(res2 => {
+        alert('success login')
+        setUser(res2.data.data);
         navigate('/')
       })
     })
     .catch(err => {
       console.log(err)
       alert('계정을 확인해주세요')
+    })
+    .finally(() => {
+      setEmail('')
+      setPassword('')
     })
   }
 
