@@ -12,7 +12,7 @@ const Home = () => {
   return (
       <div className={styles.wrapper}>
         This is home page<br/>
-        <img src={imgUrl} width='100px'/><br/>
+        {/*<img src={imgUrl} width='100px'/><br/>*/}
       </div>
   );
 }
