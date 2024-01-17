@@ -3,6 +3,7 @@
 .wrapper {
   border-bottom: 1px solid $defaultColor;
   width: 100%;
+  height: 100px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -12,10 +13,9 @@
   position: relative;
   top: 0;
   left: 0;
-  height: 100px;
 
   img {
-    height: calculatePcVw(100px);
+    height: 100px;
   }
 
   .navWrapper {

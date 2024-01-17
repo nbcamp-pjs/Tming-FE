@@ -3,6 +3,11 @@
 html {
   height: 100%;
   user-select: none;
+
+  // TODO add custom scrollbar
+  ::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 body {
