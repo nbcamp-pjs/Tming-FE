@@ -48,6 +48,13 @@
         &:hover {
           background-color: $hoverBtnColor;
         }
+
+        &.disabled {
+          background: $gray;
+          color: $black;
+          filter: brightness(0.5);
+          cursor: auto;
+        }
       }
     }
 
@@ -102,6 +109,13 @@
 
         &:hover {
           background-color: $hoverBtnColor;
+        }
+
+        &.disabled {
+          background: $gray;
+          color: $black;
+          filter: brightness(0.5);
+          cursor: auto;
         }
       }
     }

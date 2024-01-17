@@ -36,7 +36,7 @@ const loginUser = (email, password) => {
 }
 
 const logoutUser = (accessToken, refreshToken) => {
-  return instance.post('/v1/users/logout', {
+  return instance.get('/v1/users/logout', {
     headers: {
       AccessToken: accessToken,
       RefreshToken: refreshToken

@@ -42,13 +42,16 @@ const Header = () => {
 
   const logout = () => {
     // TODO ADD request logout
-    // logoutUser()
-    // .then(res => {
-    //   setUser(null)
-    // })
-    setUser(null);
-    setAccessToken(null);
-    setRefreshToken(null);
+    logoutUser(accessToken, refreshToken)
+    .then(res => {
+      console.log(res);
+      setUser(null)
+      setAccessToken(null);
+      setRefreshToken(null);
+    })
+    .catch(err => {
+      console.error(err);
+    })
   }
 
   const getLogoutPage = () => {

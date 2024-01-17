@@ -1,7 +1,7 @@
 import styles from './login.module.scss';
 import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
 import {accessTokenState, refreshTokenState, userState} from "../../states";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {getUserProfile, loginUser} from '../../apis/user';
 
@@ -9,21 +9,30 @@ const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
+  const [userId, setUserId] = useState(null)
   const [user, setUser] = useRecoilState(userState)
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
   const [refreshToken, setRefreshToken] = useRecoilState(refreshTokenState)
+
+  useEffect(() => {
+    if (userId == null || accessToken == null || refreshToken == null) {
+      return;
+    }
+
+    getUserProfile(userId, accessToken, refreshToken)
+    .then(res2 => {
+      alert('success login')
+      setUser(res2.data.data);
+      navigate('/')
+    })
+  }, [userId, accessToken, refreshToken])
 
   const login = () => {
     loginUser(email, password)
     .then(res1 => {
       setAccessToken(res1.headers.accesstoken)
       setRefreshToken(res1.headers.refreshtoken)
-      getUserProfile(res1.data.data.userId, accessToken, refreshToken)
-      .then(res2 => {
-        alert('success login')
-        setUser(res2.data.data);
-        navigate('/')
-      })
+      setUserId(res1.data.data.userId)
     })
     .catch(err => {
       console.log(err)
