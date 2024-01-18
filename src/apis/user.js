@@ -107,6 +107,19 @@ const getFollowings = (userId, accessToken, refreshToken) => {
   })
 }
 
+const sendEmail = (email) => {
+  return instance.post('/v1/users/email', {
+    email: email
+  })
+}
+
+const verifyEmail = (email, authNumber) => {
+  return instance.post('/v1/users/email/verify', {
+    email: email,
+    authNumber: authNumber
+  })
+}
+
 export {
   checkEmail,
   checkUsername,
@@ -119,4 +132,6 @@ export {
   unfollowUser,
   getFollowers,
   getFollowings,
+  sendEmail,
+  verifyEmail,
 }
