@@ -13,19 +13,19 @@
   bottom: 0;
   border-top: 1px solid $defaultColor;
   height: 100px;
-  padding: 0 calculatePcVw(50px);
-  font-size: calculatePcVw($pc-footer);
+  padding: 0 50px;
+  font-size: $pc-footer;
 
   .text {
 
   }
 
   .members {
-    margin-right: calculatePcVw(50px);
+    margin-right: 50px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    gap: calculatePcVw(15px);
+    gap: 15px;
 
     .member {
       display: flex;
@@ -35,11 +35,11 @@
 
       .githubImage {
         align-items: center;
-        height: calculatePcVw(25px);
+        height: 25px;
         cursor: pointer;
 
         img {
-          height: calculatePcVw(25px);
+          height: 25px;
         }
       }
     }

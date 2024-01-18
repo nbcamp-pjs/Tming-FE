@@ -1,21 +1,27 @@
 import styles from './sample.module.scss';
 import {useEffect, useState} from "react";
 import {getAllSamples, insertSample} from '../../apis/sample';
+import {getFollowers, getFollowings, getUserProfile} from "../../apis/user";
+import {useRecoilState} from "recoil";
+import {accessTokenState, refreshTokenState, userState} from "../../states";
 
 const Sample = () => {
   const [title, setTitle] = useState('')
   const [text, setText] = useState('')
   const [samples, setSamples] = useState([])
+  const [user, setUser] = useRecoilState(userState)
+  const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
+  const [refreshToken, setRefreshToken] = useRecoilState(refreshTokenState)
 
   useEffect(() => {
-    getAllSamples()
+    getAllSamples(accessToken, refreshToken)
     .then(res => {
       setSamples(res.data.data.sampleGetReses);
     });
   }, [])
 
   const saveSample = () => {
-    insertSample(title, text)
+    insertSample(title, text, accessToken, refreshToken)
     .then(res => {
       window.location.reload();
     })
