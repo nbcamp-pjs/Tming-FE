@@ -1,7 +1,12 @@
 import styles from './signup.module.scss';
 import {useEffect, useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {checkEmail, checkUsername, signupUser} from '../../apis/user';
+import {
+  checkEmail,
+  checkUsername,
+  sendEmail,
+  signupUser, verifyEmail
+} from '../../apis/user';
 import {jobs} from "../../utils/jobs";
 
 const Signup = () => {
@@ -9,11 +14,13 @@ const Signup = () => {
   const [password, setPassword] = useState('')
   const [username, setUsername] = useState('')
   const [job, setJob] = useState('')
+  const [authNumber, setAuthNumber] = useState('')
   const [isPossibleEmail, setIsPossibleEmail] = useState(false)
   const [isPossibleUsername, setIsPossibleUsername] = useState(false)
 
   const emailChkDisable = useRef(null)
   const usernameChkDisable = useRef(null)
+  const checkDisable = useRef(null)
   const btnDisable = useRef(null)
 
   const navigate = useNavigate()
@@ -92,16 +99,32 @@ const Signup = () => {
 
   const checkDuplicatedEmail = () => {
     // TODO add email verify
-    checkEmail(email)
+    // checkEmail(email)
+    // .then(res => {
+    //   console.log(res)
+    //   if (res.data.data.check) {
+    //     alert('확인되었습니다.');
+    //     setIsPossibleEmail(true);
+    //     emailChkDisable.current.classList.add(styles.disabled);
+    //   } else {
+    //     alert('중복된 이메일입니다.');
+    //     emailChkDisable.current.classList.remove(styles.disabled);
+    //   }
+    // })
+    sendEmail(email)
     .then(res => {
-      console.log(res)
-      if (res.data.data.check) {
+      alert('이메일이 전송되었습니다. 인증번호를 입력해주세요.');
+      checkDisable.current.classList.remove(styles.hide);
+    })
+  }
+
+  const checkEmailCheck = () => {
+    verifyEmail(email, authNumber)
+    .then(res => {
+      if (res.data.data.success) {
         alert('확인되었습니다.');
         setIsPossibleEmail(true);
         emailChkDisable.current.classList.add(styles.disabled);
-      } else {
-        alert('중복된 이메일입니다.');
-        emailChkDisable.current.classList.remove(styles.disabled);
       }
     })
   }
@@ -110,6 +133,10 @@ const Signup = () => {
     setEmail(e.target.value);
     setIsPossibleEmail(false);
     emailChkDisable.current.classList.remove(styles.disabled);
+  }
+
+  const onChangeEmailCheck = (e) => {
+    setAuthNumber(e.target.value);
   }
 
   const onChangePassword = (e) => {
@@ -132,7 +159,11 @@ const Signup = () => {
         <div className={styles.inputs}>
           <div className={styles.email}>
             <input type="text" onChange={onChangeEmail} value={email} placeholder={"email"}/>
-            <button ref={emailChkDisable} className={styles.btn} onClick={checkDuplicatedEmail}>중복체크</button>
+            <button ref={emailChkDisable} className={styles.btn} onClick={checkDuplicatedEmail}>인증번호</button>
+          </div>
+          <div ref={checkDisable} className={`${styles.email} ${styles.hide}`}>
+            <input type="text" onChange={onChangeEmailCheck} value={authNumber} placeholder={"인증번호"}/>
+            <button className={styles.btn} onClick={checkEmailCheck}>확인</button>
           </div>
           <div className={styles.password}>
             <input type="password" onChange={onChangePassword} value={password} placeholder={"password"}/>
