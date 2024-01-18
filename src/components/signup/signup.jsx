@@ -1,4 +1,6 @@
 import styles from './signup.module.scss';
+import alertify from "alertifyjs";
+import 'alertifyjs/build/css/alertify.css';
 import {useEffect, useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {
@@ -50,34 +52,33 @@ const Signup = () => {
 
   const signup = () => {
     if (!validateEmail(email)) {
-      alert('이메일 형식을 확인해주세요.');
+      alertify.error("이메일 형식을 확인해주세요.", "1.2");
       return;
     }
 
     if (!validateUsername(username)) {
-      alert('닉네임 형식을 확인해주세요.');
+      alertify.error("닉네임 형식을 확인해주세요.", "1.2");
       return;
     }
 
     if (!validatePassword(password)) {
-      alert('패스워드 형식을 확인해주세요.');
+      alertify.error("패스워드 형식을 확인해주세요.", "1.2");
       return;
     }
 
     if (job === '') {
-      alert('직군을 선택해주세요.');
+      alertify.error("직군을 선택해주세요.", "1.2");
       return;
     }
 
     signupUser(email, password, username, job)
     .then(res => {
       if (res.data.code === 1004) {
-        alert('이메일 or 닉네임이 중복되었습니다.')
+        alertify.error("이메일 or 닉네임이 중복되었습니다.", "1.2");
         return;
       }
 
-      console.log(res)
-      alert('회원가입이 완료되었습니다.');
+      alertify.success("회원가입이 완료되었습니다.", "1.2");
       navigate('/');
     })
   }
@@ -87,11 +88,11 @@ const Signup = () => {
     .then(res => {
       console.log(res)
       if (res.data.data.check) {
-        alert('확인되었습니다.');
+        alertify.success("확인되었습니다.", "1.2");
         setIsPossibleUsername(true);
         usernameChkDisable.current.classList.add(styles.disabled);
       } else {
-        alert('중복된 닉네임입니다.');
+        alertify.error("중복된 닉네임입니다.", "1.2");
         usernameChkDisable.current.classList.remove(styles.disabled);
       }
     })
@@ -113,7 +114,7 @@ const Signup = () => {
     // })
     sendEmail(email)
     .then(res => {
-      alert('이메일이 전송되었습니다. 인증번호를 입력해주세요.');
+      alertify.success("이메일이 전송되었습니다. 인증번호를 입력해주세요.", "2");
       checkDisable.current.classList.remove(styles.hide);
     })
   }
@@ -122,7 +123,7 @@ const Signup = () => {
     verifyEmail(email, authNumber)
     .then(res => {
       if (res.data.data.success) {
-        alert('확인되었습니다.');
+        alertify.success("확인되었습니다.", "1.2");
         setIsPossibleEmail(true);
         emailChkDisable.current.classList.add(styles.disabled);
       }

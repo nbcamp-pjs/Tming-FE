@@ -1,4 +1,6 @@
 import styles from './login.module.scss';
+import alertify from "alertifyjs";
+import 'alertifyjs/build/css/alertify.css';
 import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
 import {accessTokenState, refreshTokenState, userState} from "../../states";
 import {useEffect, useState} from "react";
@@ -21,7 +23,7 @@ const Login = () => {
 
     getUserProfile(userId, accessToken, refreshToken)
     .then(res2 => {
-      alert('success login')
+      alertify.success("로그인 완료되었습니다.", "1.2");
       setUser(res2.data.data);
       navigate('/')
     })
@@ -36,7 +38,7 @@ const Login = () => {
     })
     .catch(err => {
       console.log(err)
-      alert('계정을 확인해주세요')
+      alertify.error("계정을 확인해주세요.", "1.2");
     })
     .finally(() => {
       setEmail('')
