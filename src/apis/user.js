@@ -79,9 +79,10 @@ const followUser = (followingId, accessToken, refreshToken) => {
 }
 
 const unfollowUser = (followingId, accessToken, refreshToken) => {
-  return instance.post('/v1/users/unfollow', {
-    followingId: followingId
-  }, {
+  return instance.delete('/v1/users/unfollow', {
+    data: {
+      followingId: followingId
+    },
     headers: {
       AccessToken: accessToken,
       RefreshToken: refreshToken
