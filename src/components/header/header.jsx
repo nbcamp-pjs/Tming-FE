@@ -18,10 +18,6 @@ const Header = () => {
       title: 'Recruit',
       path: '/recruit',
     },
-    {
-      title: 'Sample',
-      path: '/sample',
-    },
   ]
 
   const myProfile = {
