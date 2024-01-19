@@ -93,7 +93,7 @@ const Profile = () => {
                 </div>
                 <div className={styles.cnt}>
                   {/*클릭 시 팔로잉 리스트 조회*/}
-                  {anotherUser && anotherUser.following}
+                  {anotherUser && anotherUser.follower}
                 </div>
               </div>
               <div className={styles.follower}>
@@ -102,7 +102,7 @@ const Profile = () => {
                   팔로워
                 </div>
                 <div className={styles.cnt}>
-                  {anotherUser && anotherUser.follower}
+                  {anotherUser && anotherUser.following}
                 </div>
               </div>
             </div>
