@@ -1,6 +1,7 @@
 @import '/src/style/constants';
 
 .wrapper {
+  user-select: none;
   border-bottom: 1px solid $defaultColor;
   width: 100%;
   height: 100px;
@@ -38,6 +39,10 @@
         text-decoration: underline;
         font-weight: 500;
         letter-spacing: -0.03em;
+      }
+
+      &.disabled {
+        display: none;
       }
     }
   }

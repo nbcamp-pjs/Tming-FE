@@ -1,6 +1,7 @@
 @import '/src/style/constants';
 
 .wrapper {
+  user-select: none;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

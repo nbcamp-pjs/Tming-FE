@@ -5,9 +5,89 @@
   height: calculatePcVw(500px);
   min-height: calc(100vh - 200px);
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  flex-direction: row;
+  justify-content: start;
+  align-items: start;
+  margin: calculatePcVw(50px);
+  gap: 100px;
 
+  .profileWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
 
+    .profile {
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      align-items: start;
+      gap: 10px;
+
+      .image {
+        img {
+          width: 150px;
+        }
+      }
+
+      .username {
+
+      }
+
+      .job {
+
+      }
+    }
+
+    .followWrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      align-items: start;
+      margin-top: 50px;
+
+      .follow {
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        align-items: start;
+        gap: 10px;
+
+        .following {
+          width: 100px;
+          text-align: center;
+
+          .text {
+
+          }
+
+          .cnt {
+
+          }
+        }
+
+        .follower {
+          width: 100px;
+          text-align: center;
+
+          .text {
+
+          }
+
+          .cnt {
+
+          }
+        }
+
+        .followBtn {
+
+        }
+      }
+    }
+  }
+
+  .posts {
+    width: calculatePcVw(1000px);
+    background-color: red;
+  }
 }
