@@ -78,8 +78,8 @@ const Signup = () => {
         return;
       }
 
-      alertify.success("회원가입이 완료되었습니다.", "1.2");
-      navigate('/');
+      alertify.success("회원가입이 완료되었습니다.<br/>로그인 해주세요.", "1.2");
+      navigate('/login');
     })
   }
 
@@ -114,7 +114,7 @@ const Signup = () => {
     // })
     sendEmail(email)
     .then(res => {
-      alertify.success("이메일이 전송되었습니다. 인증번호를 입력해주세요.", "2");
+      alertify.success("이메일이 전송되었습니다.<br/>인증번호를 입력해주세요.", "2");
       checkDisable.current.classList.remove(styles.hide);
     })
   }

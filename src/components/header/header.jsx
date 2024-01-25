@@ -14,14 +14,10 @@ const Header = () => {
       title: 'Home',
       path: '/',
     },
-    {
-      title: 'Recruit',
-      path: '/recruit',
-    },
   ]
 
   const myProfile = {
-    title: 'MyProfile',
+    title: 'Profile',
     path: '/profile/'
   }
 

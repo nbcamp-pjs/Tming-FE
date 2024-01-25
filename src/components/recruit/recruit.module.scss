@@ -9,7 +9,36 @@
   align-items: center;
 
   .postList {
-    //overflow: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .post {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: calculatePcVw(20px);
+      align-items: center;
+      .postId {
+
+      }
+
+      .title {
+
+      }
+
+      .deadline {
+
+      }
+
+      .status {
+
+      }
+
+      .username {
+
+      }
+    }
   }
 
   .btns {

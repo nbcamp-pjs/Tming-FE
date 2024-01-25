@@ -36,3 +36,11 @@ body {
   color: $white;
   font-size: 12px;
 }
+
+.react-datepicker-wrapper {
+  height: calculatePcVw(40px);
+
+  .react-datepicker__input-container {
+    height: calculatePcVw(40px);
+  }
+}
