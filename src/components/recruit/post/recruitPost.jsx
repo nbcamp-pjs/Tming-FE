@@ -52,9 +52,9 @@ const RecruitPost = () => {
     .then(res => {
       console.log(res)
       if (res.data.code === 4007) {
-        alertify.error("title은 30자 안으로 작성되어야 합니다.", "1.2");
+        alertify.error(res.data.message, "1.2");
       } else if (res.data.code === 4008) {
-        alertify.error("content는 1500자 안으로 작성되어야 합니다.", "1.2");
+        alertify.error(res.data.message, "1.2");
       } else {
         alertify.success("모집글이 저장되었습니다.", "1.2");
         navigate('/');

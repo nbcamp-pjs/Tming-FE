@@ -74,7 +74,7 @@ const Signup = () => {
     signupUser(email, password, username, job)
     .then(res => {
       if (res.data.code === 1004) {
-        alertify.error("이메일 or 닉네임이 중복되었습니다.", "1.2");
+        alertify.error(res.data.message, "1.2");
         return;
       }
 

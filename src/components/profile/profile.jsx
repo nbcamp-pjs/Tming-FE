@@ -33,7 +33,7 @@ const Profile = () => {
     followUser(userId, accessToken, refreshToken)
     .then(res => {
       if (res.data.code === 3005) {
-        alertify.error("이미 팔로우한 유저입니다.", "1.2");
+        alertify.error(res.data.message, "1.2");
       } else {
         alertify.success("팔로우 되었습니다.", "1.2");
       }
@@ -45,7 +45,7 @@ const Profile = () => {
     unfollowUser(userId, accessToken, refreshToken)
     .then(res => {
       if (res.data.code === 3006) {
-        alertify.error("아직 팔로우되지 않은 유저입니다.", "1.2");
+        alertify.error(res.data.message, "1.2");
       } else {
         alertify.success("팔로우가 취소되었습니다.", "1.2");
       }
