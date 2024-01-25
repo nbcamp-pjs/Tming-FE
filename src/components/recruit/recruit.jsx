@@ -14,7 +14,7 @@ const Recruit = () => {
   const [type, setType] = useState('ALL')
   const [skill, setSkill] = useState(null)
   const [job, setJob] = useState(null)
-  const maxTitleLength = 3;
+  const maxTitleLength = 15;
 
   const [imageUrl, setImageUrl] = useState(null)
 
@@ -32,11 +32,8 @@ const Recruit = () => {
     formData.append("skill", skill);
     formData.append("job", job);
 
-    console.log(accessToken)
-    console.log(refreshToken)
     getPosts(type, skill, job, accessToken, refreshToken)
     .then(res => {
-      console.log(res.data.data)
       setPostList(res.data.data.postAllReadRes);
       // setImageUrl(getImg(res.data.data.postAllReadRes[0].imageUrl.replace(process.env.REACT_APP_S3_BUCKET_URL, "")))
     })

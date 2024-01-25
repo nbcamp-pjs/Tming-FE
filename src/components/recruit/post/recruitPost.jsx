@@ -7,10 +7,12 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {savePost} from "../../../apis/post";
 import {accessTokenState, refreshTokenState} from "../../../states";
+import {useNavigate} from "react-router-dom";
 
 const RecruitPost = () => {
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
   const [refreshToken, setRefreshToken] = useRecoilState(refreshTokenState)
+  const navigate = useNavigate()
 
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
@@ -19,12 +21,13 @@ const RecruitPost = () => {
   const imgRef = useRef();
 
   useEffect(() => {
-    console.log(deadline)
-  }, [deadline])
+    if (!accessToken) {
+      alertify.error("로그인 후 이용해주세요.", "1.2");
+      navigate('/login');
+    }
+  }, [accessToken])
 
   const save = () => {
-    console.log(imgFile)
-
     const formData = new FormData();
     deadline.setHours(23, 59, 59, 999);
     // TODO add input job limits and skills
@@ -48,6 +51,14 @@ const RecruitPost = () => {
     savePost(formData, accessToken, refreshToken)
     .then(res => {
       console.log(res)
+      if (res.data.code === 4007) {
+        alertify.error("title은 30자 안으로 작성되어야 합니다.", "1.2");
+      } else if (res.data.code === 4008) {
+        alertify.error("content는 1500자 안으로 작성되어야 합니다.", "1.2");
+      } else {
+        alertify.success("모집글이 저장되었습니다.", "1.2");
+        navigate('/');
+      }
     })
     .catch(err => {
       console.error(err);
