@@ -64,25 +64,21 @@ const Recruit = () => {
       <div className={styles.wrapper}>
         <div className={styles.postList}>
           <table>
+            <tr>
+              <th>번호</th>
+              <th>제목</th>
+              <th>마감일</th>
+              <th>상태</th>
+              <th>작성자</th>
+            </tr>
             {postList && postList.map((post, idx) => (
-                // TODO fix table
-              <div key={idx} className={styles.post}>
-                <div className={styles.postId}>
-                  {post.postId}
-                </div>
-                <div className={styles.title}>
-                  {getPostLink(post.postId, post.title)}
-                </div>
-                <div className={styles.deadline}>
-                  {post.deadline}
-                </div>
-                <div className={styles.status}>
-                  {post.status}
-                </div>
-                <div className={styles.username}>
-                  {post.username}
-                </div>
-              </div>
+                <tr key={idx}>
+                  <td>{post.postId}</td>
+                  <td>{getPostLink(post.postId, post.title)}</td>
+                  <td>{post.deadline}</td>
+                  <td>{post.status}</td>
+                  <td>{post.username}</td>
+                </tr>
             ))}
           </table>
         </div>
