@@ -48,7 +48,7 @@ const Header = () => {
       setUser(null)
       setAccessToken(null);
       setRefreshToken(null);
-      navigate('/')
+      navigate('/login')
     })
     .catch(err => {
       console.error(err);
