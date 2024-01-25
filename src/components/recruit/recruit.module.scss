@@ -8,6 +8,11 @@
   justify-content: center;
   align-items: center;
 
+  h1 {
+    background-color: red;
+    color: $white;
+  }
+
   .filtering {
     .type {
 
@@ -28,30 +33,80 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    .post {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      gap: calculatePcVw(20px);
-      align-items: center;
-      .postId {
 
+    .table {
+      .thead {
+        .postTitle {
+          display: flex;
+          flex-direction: row;
+          justify-content: start;
+          text-align: center;
+          gap: 20px;
+
+          .postIdTitle {
+            width: 50px;
+          }
+
+          .titleTitle {
+            width: 300px;
+          }
+
+          .deadlineTitle {
+            width: 100px;
+          }
+
+          .statusTitle {
+            width: 75px;
+          }
+
+          .usernameTitle {
+            width: 100px;
+          }
+        }
       }
 
-      .title {
+      .tbody {
+        .post {
+          display: flex;
+          flex-direction: row;
+          justify-content: start;
+          gap: 20px;
 
-      }
+          .postId {
+            width: 50px;
+            text-align: center;
+          }
 
-      .deadline {
+          .title {
+            width: 300px;
+            text-align: start;
 
-      }
+            a:-webkit-any-link {
+              color: $black;
+              cursor: pointer;
+              text-decoration: none;
 
-      .status {
+              &:hover {
+                color: $darkGray;
+              }
+            }
+          }
 
-      }
+          .deadline {
+            width: 100px;
+            text-align: center;
+          }
 
-      .username {
+          .status {
+            width: 75px;
+            text-align: center;
+          }
 
+          .username {
+            width: 100px;
+            text-align: center;
+          }
+        }
       }
     }
   }

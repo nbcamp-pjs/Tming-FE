@@ -110,24 +110,24 @@ const Recruit = () => {
           <button onClick={clickSearchBtn}>검색</button>
         </div>
         <div className={styles.postList}>
-          <table>
-            <thead>
-              <tr>
-                <th>번호</th>
-                <th>제목</th>
-                <th>마감일</th>
-                <th>상태</th>
-                <th>작성자</th>
+          <table className={styles.table}>
+            <thead className={styles.thead}>
+              <tr className={styles.postTitle}>
+                <th className={styles.postIdTitle}>번호</th>
+                <th className={styles.titleTitle}>제목</th>
+                <th className={styles.deadlineTitle}>마감일</th>
+                <th className={styles.statusTitle}>상태</th>
+                <th className={styles.usernameTitle}>작성자</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className={styles.tbody}>
               {postList && postList.map((post, idx) => (
-                  <tr key={idx}>
-                    <td>{post.postId}</td>
-                    <td>{getPostLink(post.postId, post.title)}</td>
-                    <td>{post.deadline}</td>
-                    <td>{post.status}</td>
-                    <td>{post.username}</td>
+                  <tr key={idx} className={styles.post}>
+                    <td className={styles.postId}>{post.postId}</td>
+                    <td className={styles.title}>{getPostLink(post.postId, post.title)}</td>
+                    <td className={styles.deadline}>{post.deadline}</td>
+                    <td className={styles.status}>{post.status}</td>
+                    <td className={styles.username}>{post.username}</td>
                   </tr>
               ))}
             </tbody>
