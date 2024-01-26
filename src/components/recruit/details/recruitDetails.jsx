@@ -68,7 +68,7 @@ const RecruitDetails = () => {
               {post && post.status}
             </div>
             <div>
-              like: {post && post.like}
+              좋아요 수: {post && post.like}
             </div>
           </div>
         </div>
