@@ -5,8 +5,76 @@
   min-height: calc(100vh - 200px);
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 
+  .header {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 1px solid $darkGray;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
 
+    .title {
+
+    }
+
+    .username {
+
+    }
+  }
+
+  .body {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 30px;
+    border: 1px solid $darkGray;
+    border-radius: 10px;
+    padding: 20px;
+
+    .content {
+      .image {
+        width: 100%;
+        margin-top: 20px;
+
+        img {
+          width: 100%;
+        }
+      }
+    }
+
+    .etc {
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      gap: 20px;
+      margin-right: 50px;
+
+      .visit {
+
+      }
+
+      .status {
+
+      }
+    }
+  }
+
+  .footer {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 30px;
+    border: 1px solid $darkGray;
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .commentArea {
+  }
 }
