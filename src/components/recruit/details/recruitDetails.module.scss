@@ -40,6 +40,7 @@
       .image {
         width: 100%;
         margin-top: 20px;
+        max-width: 800px;
 
         img {
           width: 100%;
@@ -76,5 +77,68 @@
   }
 
   .commentArea {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    //border: 1px solid $darkGray;
+    border-radius: 10px;
+    padding: 20px;
+
+    .inputComment {
+      height: 100px;
+      margin-bottom: 50px;
+
+      .textArea {
+        width: 100%;
+        height: 100%;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+
+      .saveCommentBtn {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: end;
+      }
+    }
+
+    .comment {
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+
+      .hr {
+        width: 100%;
+      }
+
+      .commentHeader {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        font-size: $pc-comment;
+
+        .commentUsername {
+
+        }
+
+        .commentCreateTimestamp {
+          font-size: $pc-comment-time;
+          color: $darkGray;
+        }
+      }
+
+      .commentBody {
+        margin: 10px 0;
+      }
+
+      .commentFooter {
+
+      }
+    }
   }
 }

@@ -4,9 +4,10 @@ import 'alertifyjs/build/css/alertify.css';
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {useRecoilState} from "recoil";
-import {accessTokenState, refreshTokenState} from "../../../states";
+import {accessTokenState, refreshTokenState, userState} from "../../../states";
 import {getPost} from "../../../apis/post";
 import {getImg} from "../../../apis/awss3";
+import {getComments} from "../../../apis/comment";
 
 const RecruitDetails = () => {
   const params = useParams();
@@ -14,8 +15,10 @@ const RecruitDetails = () => {
   const navigate = useNavigate()
 
   const [post, setPost] = useState(null)
+  const [comments, setComments] = useState([])
   const [imageUrl, setImageUrl] = useState('')
 
+  const [user, setUser] = useRecoilState(userState)
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
   const [refreshToken, setRefreshToken] = useRecoilState(refreshTokenState)
 
@@ -37,6 +40,11 @@ const RecruitDetails = () => {
           setImageUrl(getImg(res.data.data.imageUrl.replace(process.env.REACT_APP_S3_BUCKET_URL, "")))
         }
       }
+    })
+
+    getComments(postId, accessToken, refreshToken)
+    .then(res => {
+      setComments(res.data.data.comments);
     })
   }, [])
 
@@ -78,7 +86,31 @@ const RecruitDetails = () => {
           {/*TODO add members 승인된 멤버 목록*/}
         </div>
         <div className={styles.commentArea}>
-          {/*TODO add comment*/}
+          <div className={styles.inputComment}>
+            <textarea className={styles.textArea} placeholder={"댓글을 작성해주세요."}/>
+            <div className={styles.saveCommentBtn}>
+              <button>등록</button>
+            </div>
+          </div>
+          {comments && comments.map((comment, idx) => (
+              <div key={idx} className={styles.comment}>
+                {idx !== 0 && <hr className={styles.hr}/>}
+                <div className={styles.commentHeader}>
+                  <div className={styles.commentUsername}>
+                    {comment.username}
+                  </div>
+                  <div className={styles.commentCreateTimestamp}>
+                    {comment.createTimestamp}
+                  </div>
+                </div>
+                <div className={styles.commentBody}>
+                  {comment.content}
+                </div>
+                <div className={styles.commentFooter}>
+                  {/*TODO add 수정, 삭제 버튼 for 본인*/}
+                </div>
+              </div>
+          ))}
         </div>
       </div>
   )
