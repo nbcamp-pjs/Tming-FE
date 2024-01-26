@@ -32,9 +32,11 @@ const updatePost = (formData, accessToken, refreshToken) => {
   })
 }
 
-const deletePost = (data, accessToken, refreshToken) => {
+const deletePost = (postId, accessToken, refreshToken) => {
   return instance.delete('/v1/posts', {
-    postDeleteReq: data
+    data: {
+      postId: postId
+    }
   }, {
     headers: {
       AccessToken: accessToken,

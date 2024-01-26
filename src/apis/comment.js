@@ -31,9 +31,11 @@ const updateComment = (commentId, content, accessToken, refreshToken) => {
   })
 }
 
-const deleteComment = (data, accessToken, refreshToken) => {
+const deleteComment = (commentId, accessToken, refreshToken) => {
   return instance.delete('/v1/comments', {
-    commentDeleteReq: data,
+    data: {
+      commentId: commentId
+    },
     headers: {
       AccessToken: accessToken,
       RefreshToken: refreshToken

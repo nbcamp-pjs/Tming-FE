@@ -7,7 +7,12 @@ import {useRecoilState} from "recoil";
 import {accessTokenState, refreshTokenState, userState} from "../../../states";
 import {getPost} from "../../../apis/post";
 import {getImg} from "../../../apis/awss3";
-import {getComments} from "../../../apis/comment";
+import {
+  deleteComment,
+  getComments,
+  saveComment,
+  updateComment
+} from "../../../apis/comment";
 
 const RecruitDetails = () => {
   const params = useParams();
@@ -15,8 +20,12 @@ const RecruitDetails = () => {
   const navigate = useNavigate()
 
   const [post, setPost] = useState(null)
-  const [comments, setComments] = useState([])
   const [imageUrl, setImageUrl] = useState('')
+
+  const [comments, setComments] = useState([])
+  const [updatingCommentId, setUpdatingCommentId] = useState(-1)
+  const [updatedCommentContent, setUpdatedCommentContent] = useState('')
+  const [commentContent, setCommentContent] = useState('')
 
   const [user, setUser] = useRecoilState(userState)
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
@@ -43,10 +52,69 @@ const RecruitDetails = () => {
     })
 
     getComments(postId, accessToken, refreshToken)
-    .then(res => {
+    .then((res) => {
       setComments(res.data.data.comments);
     })
   }, [])
+
+  const registerComment = () => {
+    saveComment(postId, commentContent, accessToken, refreshToken)
+    .then(res => {
+      if (res.data.code === 0) {
+        alertify.success("댓글이 작성되었습니다.", "1.2");
+        setCommentContent('')
+        window.location.reload();
+      } else {
+        alertify.error("알 수 없는 에러가 발생했습니다.<br/>다시 시도해주세요.", "1.2");
+      }
+    })
+  }
+
+  const modifyComment = (idx, commentId, content) => {
+    if (updatingCommentId === commentId) {
+     updateComment(commentId, updatedCommentContent, accessToken, refreshToken)
+     .then(res => {
+       if (res.data.code === 0) {
+         alertify.success("댓글이 수정되었습니다.", "1.2");
+         setUpdatedCommentContent('');
+         setUpdatingCommentId(-1);
+         window.location.reload();
+       } else {
+         alertify.error("알 수 없는 에러가 발생했습니다.<br/>다시 시도해주세요.", "1.2");
+       }
+     })
+    } else {
+      setUpdatingCommentId(commentId);
+      setUpdatedCommentContent(content);
+    }
+  }
+
+  const delComment = (commentId) => {
+    deleteComment(commentId, accessToken, refreshToken)
+    .then(res => {
+      if (res.data.code === 0) {
+        alertify.success("댓글이 삭제되었습니다.", "1.2");
+        window.location.reload();
+      } else {
+        alertify.error("알 수 없는 에러가 발생했습니다.<br/>다시 시도해주세요.", "1.2");
+      }
+    })
+  }
+
+  const getBtns = (idx, commentId, content) => {
+    return <div>
+      <button onClick={() => modifyComment(idx, commentId, content)}>수정</button>
+      <button onClick={() => delComment(commentId)}>삭제</button>
+    </div>
+  }
+
+  const onChangeWritingCommentContent = (e) => {
+    setCommentContent(e.target.value);
+  }
+
+  const onChangeUpdatingCommentContent = (e) => {
+    setUpdatedCommentContent(e.target.value);
+  }
 
   return (
       <div className={styles.wrapper}>
@@ -60,7 +128,7 @@ const RecruitDetails = () => {
         </div>
         <div className={styles.body}>
           <div className={styles.content}>
-            {post && post.content}
+            <pre>{post && post.content}</pre>
             <div className={styles.image}>
               <img src={imageUrl}/><br/>
             </div>
@@ -87,9 +155,9 @@ const RecruitDetails = () => {
         </div>
         <div className={styles.commentArea}>
           <div className={styles.inputComment}>
-            <textarea className={styles.textArea} placeholder={"댓글을 작성해주세요."}/>
+            <textarea className={styles.textArea} value={commentContent} onChange={onChangeWritingCommentContent} placeholder={"댓글을 작성해주세요."}/>
             <div className={styles.saveCommentBtn}>
-              <button>등록</button>
+              <button onClick={registerComment}>등록</button>
             </div>
           </div>
           {comments && comments.map((comment, idx) => (
@@ -104,10 +172,12 @@ const RecruitDetails = () => {
                   </div>
                 </div>
                 <div className={styles.commentBody}>
-                  {comment.content}
+                  <pre>
+                    {updatingCommentId !== comment.commentId? comment.content: <textarea className={styles.updatingTextArea} value={updatedCommentContent} onChange={onChangeUpdatingCommentContent}></textarea>}
+                  </pre>
                 </div>
                 <div className={styles.commentFooter}>
-                  {/*TODO add 수정, 삭제 버튼 for 본인*/}
+                  {comment.username === user.username && getBtns(idx, comment.commentId, comment.content)}
                 </div>
               </div>
           ))}
