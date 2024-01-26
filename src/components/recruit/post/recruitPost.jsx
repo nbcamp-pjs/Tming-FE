@@ -8,6 +8,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import {savePost} from "../../../apis/post";
 import {accessTokenState, refreshTokenState} from "../../../states";
 import {useNavigate} from "react-router-dom";
+import {jobs} from "../../../utils/jobs";
+import {skills} from "../../../utils/skills";
 
 const RecruitPost = () => {
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
@@ -20,6 +22,9 @@ const RecruitPost = () => {
   const [imgFile, setImgFile] = useState("");
   const imgRef = useRef();
 
+  const [headcounts, setHeadcounts] = useState(Array(14).fill(0))
+  const [checkedSkills, setCheckedSkills] = useState(new Set())
+
   useEffect(() => {
     if (!accessToken) {
       alertify.error("로그인 후 이용해주세요.", "1.2");
@@ -28,20 +33,24 @@ const RecruitPost = () => {
   }, [accessToken])
 
   const save = () => {
+    const jobLimits = []
+    headcounts.map((headcount, idx) => {
+      if (headcount) {
+        jobLimits.push({
+          job: jobs[idx].value,
+          headcount: headcount
+        })
+      }
+    })
+
     const formData = new FormData();
     deadline.setHours(23, 59, 59, 999);
-    // TODO add input job limits and skills
     const data = {
       title: title,
       content: content,
       deadline: deadline,
-      jobLimits: [
-        {
-          job: "BACKEND",
-          headcount: 1,
-        }
-      ],
-      skills: ["JAVA"]
+      jobLimits: jobLimits,
+      skills: Array.from(checkedSkills)
     }
     const json = JSON.stringify(data);
     const blob = new Blob([json], { type: "application/json" });
@@ -50,7 +59,6 @@ const RecruitPost = () => {
 
     savePost(formData, accessToken, refreshToken)
     .then(res => {
-      console.log(res)
       if (res.data.code === 4007) {
         alertify.error(res.data.message, "1.2");
       } else if (res.data.code === 4008) {
@@ -71,6 +79,23 @@ const RecruitPost = () => {
 
   const onChangeContent = (e) => {
     setContent(e.target.value);
+  }
+
+  const onChangeJobLimit = (idx) => (e) => {
+    setHeadcounts(prev => {
+      prev[idx] = e.target.value
+      return [...prev]
+    })
+  }
+
+  const checkedSkillHandler = (skill) => (e) => {
+    if (e.target.checked) {
+      checkedSkills.add(skill);
+      setCheckedSkills(checkedSkills);
+    } else if (!e.target.checked && checkedSkills.has(skill)) {
+      checkedSkills.delete(skill);
+      setCheckedSkills(checkedSkills);
+    }
   }
 
   const saveImgFile = () => {
@@ -97,6 +122,23 @@ const RecruitPost = () => {
                 selected={deadline}
                 onChange={date => setDeadline(date)}
                 minDate={new Date()}/>
+          </div>
+          <div>
+            직군별 모집 인원을 작성하세요.
+            {jobs.map((job, idx) => (
+                <div key={idx}>
+                  {job.title}: <input type="text" value={headcounts[idx]} onChange={onChangeJobLimit(idx)} />
+                </div>
+            ))}
+          </div>
+          <hr style={{width: '100%'}}/>
+          <div>
+            기술 스택을 선택해주세요.
+            {skills.map((skill, idx) => (
+                <div key={idx}>
+                  <label><input type="checkbox" onChange={checkedSkillHandler(skill.value)}/> {skill.title}</label>
+                </div>
+            ))}
           </div>
           <input
               type="file"
