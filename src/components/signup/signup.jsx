@@ -84,6 +84,10 @@ const Signup = () => {
   }
 
   const checkDuplicatedUsername = () => {
+    if (isPossibleUsername) {
+      return;
+    }
+
     checkUsername(username)
     .then(res => {
       console.log(res)
@@ -99,19 +103,10 @@ const Signup = () => {
   }
 
   const checkDuplicatedEmail = () => {
-    // TODO add email verify
-    // checkEmail(email)
-    // .then(res => {
-    //   console.log(res)
-    //   if (res.data.data.check) {
-    //     alert('확인되었습니다.');
-    //     setIsPossibleEmail(true);
-    //     emailChkDisable.current.classList.add(styles.disabled);
-    //   } else {
-    //     alert('중복된 이메일입니다.');
-    //     emailChkDisable.current.classList.remove(styles.disabled);
-    //   }
-    // })
+    if (isPossibleEmail) {
+      return;
+    }
+
     sendEmail(email)
     .then(res => {
       alertify.success("이메일이 전송되었습니다.<br/>인증번호를 입력해주세요.", "2");
