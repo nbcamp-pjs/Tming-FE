@@ -57,12 +57,12 @@ const Signup = () => {
     }
 
     if (!validateUsername(username)) {
-      alertify.error("닉네임 형식을 확인해주세요.", "1.2");
+      alertify.error("username은 4자 이상, 12자 이하인 대소문자, 숫자, 한글로 구성되어야 합니다.", "1.2");
       return;
     }
 
     if (!validatePassword(password)) {
-      alertify.error("패스워드 형식을 확인해주세요.", "1.2");
+      alertify.error("password는 8자 이상, 16자 이하인 대소문자, 숫자, 특수문자를 모두 포함하여 구성되어야 합니다.", "1.2");
       return;
     }
 
