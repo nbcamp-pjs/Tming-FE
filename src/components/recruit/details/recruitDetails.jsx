@@ -149,9 +149,34 @@ const RecruitDetails = () => {
           </div>
         </div>
         <div className={styles.footer}>
-          {/*TODO add jobLimits 직군별 모집 인원 list*/}
-          {/*TODO add skills 기술 스택 list*/}
-          {/*TODO add members 승인된 멤버 목록*/}
+          <div className={styles.jobLimits}>
+            모집 인원
+            {post && post.jobLimits.map((jobLimit, idx) => (
+                <div key={idx} className={styles.jobLimit}>
+                  {jobLimit.job}: {jobLimit.headcount}명
+                </div>
+            ))}
+          </div>
+          <div className={styles.skills}>
+            기술 스택
+            {post && post.skills.map((skill, idx) => (
+                <div key={idx} className={styles.skill}>
+                  {skill}
+                </div>
+            ))}
+          </div>
+          <div className={styles.members}>
+            모집된 인원
+            {post && post.members.map((member, idx) => (
+                <div key={idx} className={styles.member}>
+                  {member.userId}
+                </div>
+            ))}
+          </div>
+        </div>
+        <div className={styles.applyArea}>
+          <button>신청하기</button>
+          <button>승인하기</button>
         </div>
         <div className={styles.commentArea}>
           <div className={styles.inputComment}>
