@@ -236,7 +236,7 @@ const RecruitDetails = () => {
   }
 
   const getMemberBtn = () => {
-    return <button onClick={pushMemberBtn}>승인하기</button>
+    return <button onClick={pushMemberBtn}>신청목록</button>
   }
 
   return (
