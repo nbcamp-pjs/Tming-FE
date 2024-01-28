@@ -19,14 +19,6 @@ const types = [
     "title": "신청승인된 모집글",
     "value": "MEMBER"
   },
-  {
-    "title": "기술별 모집글",
-    "value": "SKILL"
-  },
-  {
-    "title": "직군별 모집글",
-    "value": "JOB"
-  },
 ]
 
 export {
