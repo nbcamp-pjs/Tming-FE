@@ -300,12 +300,12 @@ const RecruitDetails = () => {
           </div>
           <div className={styles.applyArea}>
             {/*TODO add cancel applicant if applied team or joined member*/}
-            {(post && user.username === post.username) && (post.status === "모집중"? getRecruited(): getRecruiting())}
+            {(post && user && user.username === post.username) && (post.status === "모집중"? getRecruited(): getRecruiting())}
             {post && !post.liked? getLikeBtn(): getUnlikeBtn()}
             {isOpenApplicantModal && <Applicant postId={postId} jobLimits={post.jobLimits} isOpen={isOpenApplicantModal} close={closeApplicantModal}/>}
             {isOpenMemberModal && <Member postId={postId} isOpen={isOpenMemberModal} close={closeMemberModal}/>}
-            {(post && post.status === "모집중") && (user.username !== post.username? getApplicantBtn(): getMemberBtn())}
-            {post && user.username === post.username && delPostBtn()}
+            {(post && user && post.status === "모집중") && (user.username !== post.username? getApplicantBtn(): getMemberBtn())}
+            {post && user && user.username === post.username && delPostBtn()}
           </div>
           <div className={styles.commentArea}>
             <div className={styles.inputComment}>
