@@ -6,185 +6,185 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: $gray;
 
-  .header {
+  .realWrapper {
     width: 80%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    border: 1px solid $darkGray;
-    border-radius: 10px;
-    padding: 20px;
-    margin-top: 20px;
-
-    .title {
-
-    }
-
-    .username {
-
-    }
-  }
-
-  .body {
-    width: 80%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-top: 30px;
-    border: 1px solid $darkGray;
-    border-radius: 10px;
-    padding: 20px;
-
-    .content {
-      pre {
-        font-family: PoppinsRegular, sans-serif !important;
-      }
-
-      .image {
-        width: 100%;
-        margin-top: 20px;
-        max-width: 800px;
-
-        img {
-          width: 100%;
-        }
-      }
-    }
-
-    .etc {
-      display: flex;
-      flex-direction: column;
-      justify-content: start;
-      gap: 20px;
-      margin-right: 50px;
-
-      .visit {
-
-      }
-
-      .status {
-
-      }
-    }
-  }
-
-  .footer {
-    width: 80%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-top: 30px;
-    border: 1px solid $darkGray;
-    border-radius: 10px;
-    padding: 20px;
-
-    .jobLimits {
-      .jobLimit {
-
-      }
-    }
-
-    .skills {
-      .skill {
-
-      }
-    }
-
-    .members {
-      .member {
-
-      }
-    }
-  }
-
-  .applyArea {
-    width: 80%;
-    display: flex;
-    flex-direction: row;
-    justify-content: end;
-    gap: 20px;
-    margin-top: 10px;
-  }
-
-  .commentArea {
-    width: 80%;
+    min-height: calc(100vh - 200px);
     display: flex;
     flex-direction: column;
-    justify-content: start;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    //border: 1px solid $darkGray;
-    border-radius: 10px;
-    padding: 20px;
+    align-items: center;
+    background-color: $white;
 
-    .inputComment {
-      height: 100px;
-      margin-bottom: 50px;
+    .header {
+      width: 90%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      border-bottom: 2px solid $darkGray;
+      padding: 20px;
+      margin-top: 20px;
 
-      textArea {
-        font-family: PoppinsRegular, sans-serif !important;
+      .title {
+
       }
 
-      .textArea {
-        width: 100%;
-        height: 100%;
-        padding: 0 !important;
-        margin: 0 !important;
-      }
+      .username {
 
-      .saveCommentBtn {
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: end;
       }
     }
 
-    .comment {
+    .body {
+      width: 90%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      border-bottom: 2px solid $darkGray;
+      padding: 20px;
+
+      .content {
+        pre {
+          font-family: PoppinsRegular, sans-serif !important;
+        }
+
+        .image {
+          width: 100%;
+          margin-top: 20px;
+          max-width: 800px;
+
+          img {
+            width: 100%;
+          }
+        }
+      }
+
+      .etc {
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        gap: 20px;
+        margin-right: 50px;
+
+        .visit {
+
+        }
+
+        .status {
+
+        }
+      }
+    }
+
+    .footer {
+      width: 90%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      border-bottom: 2px solid $darkGray;
+      padding: 20px;
+
+      .jobLimits {
+        .jobLimit {
+
+        }
+      }
+
+      .skills {
+        .skill {
+
+        }
+      }
+
+      .members {
+        .member {
+          cursor: pointer;
+        }
+      }
+    }
+
+    .applyArea {
+      width: 90%;
+      display: flex;
+      flex-direction: row;
+      justify-content: end;
+      padding: 20px;
+    }
+
+    .commentArea {
+      width: 90%;
       display: flex;
       flex-direction: column;
       justify-content: start;
+      padding: 20px;
 
-      .hr {
-        width: 100%;
-      }
+      .inputComment {
+        height: 100px;
+        margin-bottom: 50px;
 
-      .commentHeader {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        font-size: $pc-comment;
-
-        .commentUsername {
-
-        }
-
-        .commentCreateTimestamp {
-          font-size: $pc-comment-time;
-          color: $darkGray;
-        }
-      }
-
-      .commentBody {
-        margin: 10px 0;
-
-        pre {
+        textArea {
           font-family: PoppinsRegular, sans-serif !important;
+        }
 
-          textArea {
-            font-family: PoppinsRegular, sans-serif !important;
+        .textArea {
+          width: 100%;
+          height: 100%;
+          padding: 0 !important;
+          margin: 0 !important;
+        }
+
+        .saveCommentBtn {
+          width: 100%;
+          display: flex;
+          flex-direction: row;
+          justify-content: end;
+        }
+      }
+
+      .comment {
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+
+        .hr {
+          width: 100%;
+        }
+
+        .commentHeader {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          font-size: $pc-comment;
+
+          .commentUsername {
+
+          }
+
+          .commentCreateTimestamp {
+            font-size: $pc-comment-time;
+            color: $darkGray;
           }
         }
 
-        .updatingTextArea {
-          width: 100%;
+        .commentBody {
+          margin: 10px 0;
+
+          pre {
+            font-family: PoppinsRegular, sans-serif !important;
+
+            textArea {
+              font-family: PoppinsRegular, sans-serif !important;
+            }
+          }
+
+          .updatingTextArea {
+            width: 100%;
+          }
         }
-      }
 
-      .commentFooter {
+        .commentFooter {
 
+        }
       }
     }
   }

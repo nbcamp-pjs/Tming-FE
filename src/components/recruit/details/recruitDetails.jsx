@@ -13,6 +13,8 @@ import {
   saveComment,
   updateComment
 } from "../../../apis/comment";
+import Applicant from "./applicant/applicant";
+import Member from "./member/member";
 
 const RecruitDetails = () => {
   const params = useParams();
@@ -21,6 +23,7 @@ const RecruitDetails = () => {
 
   const [post, setPost] = useState(null)
   const [imageUrl, setImageUrl] = useState('')
+  const [memberImgUrls, setMemberImgUrls] = useState([])
 
   const [comments, setComments] = useState([])
   const [updatingCommentId, setUpdatingCommentId] = useState(-1)
@@ -30,6 +33,9 @@ const RecruitDetails = () => {
   const [user, setUser] = useRecoilState(userState)
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
   const [refreshToken, setRefreshToken] = useRecoilState(refreshTokenState)
+
+  const [isOpenApplicantModal, setIsOpenApplicantModal] = useState(false)
+  const [isOpenMemberModal, setIsOpenMemberModal] = useState(false)
 
   useEffect(() => {
     if (!accessToken) {
@@ -48,6 +54,17 @@ const RecruitDetails = () => {
         if (res.data.data.imageUrl) {
           setImageUrl(getImg(res.data.data.imageUrl.replace(process.env.REACT_APP_S3_BUCKET_URL, "")))
         }
+
+        const newArr = []
+        res.data.data.members.map((member, idx) => {
+          if (member && member.profileImageUrl) {
+            newArr.push(getImg(member.profileImageUrl.replace(process.env.REACT_APP_S3_BUCKET_URL, "")))
+          }
+          else {
+            newArr.push(getImg("test/loopy-goonchim.png"));
+          }
+        })
+        setMemberImgUrls(() => newArr);
       }
     })
 
@@ -56,6 +73,10 @@ const RecruitDetails = () => {
       setComments(res.data.data.comments);
     })
   }, [])
+
+  const getProfilePage = (userId) => {
+    navigate('/profile/' + userId);
+  }
 
   const registerComment = () => {
     saveComment(postId, commentContent, accessToken, refreshToken)
@@ -116,96 +137,123 @@ const RecruitDetails = () => {
     setUpdatedCommentContent(e.target.value);
   }
 
+  const pushApplicantBtn = () => {
+    setIsOpenApplicantModal(true);
+  }
+
+  const pushMemberBtn = () => {
+    setIsOpenMemberModal(true);
+  }
+
+  const closeApplicantModal = () => {
+    setIsOpenApplicantModal(false)
+  }
+
+  const closeMemberModal = () => {
+    setIsOpenMemberModal(false)
+  }
+
+  const getApplicantBtn = () => {
+    return <button onClick={pushApplicantBtn}>신청하기</button>
+  }
+
+  const getMemberBtn = () => {
+    return <button onClick={pushMemberBtn}>승인하기</button>
+  }
+
   return (
       <div className={styles.wrapper}>
-        <div className={styles.header}>
-          <div className={styles.title}>
-            제목: {post && post.title}
-          </div>
-          <div className={styles.username}>
-            작성자: {post && post.username}
-          </div>
-        </div>
-        <div className={styles.body}>
-          <div className={styles.content}>
-            <pre>{post && post.content}</pre>
-            <div className={styles.image}>
-              <img src={imageUrl}/><br/>
+        <div className={styles.realWrapper}>
+          <div className={styles.header}>
+            <div className={styles.title}>
+              제목: {post && post.title}
+            </div>
+            <div className={styles.username}>
+              작성자: {post && post.username}
             </div>
           </div>
-          <div className={styles.etc}>
-            <div className={styles.visit}>
-              조회수: {post && post.visit}
+          <div className={styles.body}>
+            <div className={styles.content}>
+              <pre>{post && post.content}</pre>
+              <div className={styles.image}>
+                <img src={imageUrl}/><br/>
+              </div>
             </div>
-            <div>
-              마감일: {post && post.deadline}
-            </div>
-            <div className={styles.status}>
-              {post && post.status}
-            </div>
-            <div>
-              좋아요 수: {post && post.like}
-            </div>
-          </div>
-        </div>
-        <div className={styles.footer}>
-          <div className={styles.jobLimits}>
-            모집 인원
-            {post && post.jobLimits.map((jobLimit, idx) => (
-                <div key={idx} className={styles.jobLimit}>
-                  {jobLimit.job}: {jobLimit.headcount}명
-                </div>
-            ))}
-          </div>
-          <div className={styles.skills}>
-            기술 스택
-            {post && post.skills.map((skill, idx) => (
-                <div key={idx} className={styles.skill}>
-                  {skill}
-                </div>
-            ))}
-          </div>
-          <div className={styles.members}>
-            모집된 인원
-            {post && post.members.map((member, idx) => (
-                <div key={idx} className={styles.member}>
-                  {member.userId}
-                </div>
-            ))}
-          </div>
-        </div>
-        <div className={styles.applyArea}>
-          <button>신청하기</button>
-          <button>승인하기</button>
-        </div>
-        <div className={styles.commentArea}>
-          <div className={styles.inputComment}>
-            <textarea className={styles.textArea} value={commentContent} onChange={onChangeWritingCommentContent} placeholder={"댓글을 작성해주세요."}/>
-            <div className={styles.saveCommentBtn}>
-              <button onClick={registerComment}>등록</button>
+            <div className={styles.etc}>
+              <div className={styles.visit}>
+                조회수: {post && post.visit}
+              </div>
+              <div>
+                마감일: {post && post.deadline}
+              </div>
+              <div className={styles.status}>
+                {post && post.status}
+              </div>
+              <div>
+                좋아요 수: {post && post.like}
+              </div>
             </div>
           </div>
-          {comments && comments.map((comment, idx) => (
-              <div key={idx} className={styles.comment}>
-                {idx !== 0 && <hr className={styles.hr}/>}
-                <div className={styles.commentHeader}>
-                  <div className={styles.commentUsername}>
-                    {comment.username}
+          <div className={styles.footer}>
+            <div className={styles.jobLimits}>
+              모집 인원
+              {post && post.jobLimits.map((jobLimit, idx) => (
+                  <div key={idx} className={styles.jobLimit}>
+                    {jobLimit.job}: {jobLimit.headcount}명
                   </div>
-                  <div className={styles.commentCreateTimestamp}>
-                    {comment.createTimestamp}
+              ))}
+            </div>
+            <div className={styles.skills}>
+              기술 스택
+              {post && post.skills.map((skill, idx) => (
+                  <div key={idx} className={styles.skill}>
+                    {skill}
                   </div>
-                </div>
-                <div className={styles.commentBody}>
+              ))}
+            </div>
+            <div className={styles.members}>
+              모집된 인원
+              {post && post.members.map((member, idx) => (
+                  <div key={idx} className={styles.member} onClick={() => getProfilePage(member.userId)}>
+                    <img src={memberImgUrls[idx]} width='30px'/>
+                  </div>
+              ))}
+            </div>
+          </div>
+          <div className={styles.applyArea}>
+            {isOpenApplicantModal && <Applicant postId={postId} jobLimits={post.jobLimits} isOpen={isOpenApplicantModal} close={closeApplicantModal}/>}
+            {isOpenMemberModal && <Member postId={postId} isOpen={isOpenMemberModal} close={closeMemberModal}/>}
+            {post && user.username !== post.username? getApplicantBtn(): getMemberBtn()}
+          </div>
+          <div className={styles.commentArea}>
+            <div className={styles.inputComment}>
+              <textarea className={styles.textArea} value={commentContent} onChange={onChangeWritingCommentContent} placeholder={"댓글을 작성해주세요."}/>
+              <div className={styles.saveCommentBtn}>
+                <button onClick={registerComment}>등록</button>
+              </div>
+            </div>
+            {comments && comments.map((comment, idx) => (
+                <div key={idx} className={styles.comment}>
+                  {idx !== 0 && <hr className={styles.hr}/>}
+                  <div className={styles.commentHeader}>
+                    <div className={styles.commentUsername}>
+                      {comment.username}
+                    </div>
+                    <div className={styles.commentCreateTimestamp}>
+                      {comment.createTimestamp}
+                    </div>
+                  </div>
+                  <div className={styles.commentBody}>
                   <pre>
                     {updatingCommentId !== comment.commentId? comment.content: <textarea className={styles.updatingTextArea} value={updatedCommentContent} onChange={onChangeUpdatingCommentContent}></textarea>}
                   </pre>
+                  </div>
+                  <div className={styles.commentFooter}>
+                    {comment.username === user.username && getBtns(idx, comment.commentId, comment.content)}
+                  </div>
                 </div>
-                <div className={styles.commentFooter}>
-                  {comment.username === user.username && getBtns(idx, comment.commentId, comment.content)}
-                </div>
-              </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
   )

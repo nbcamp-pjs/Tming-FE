@@ -22,7 +22,7 @@ const Profile = () => {
     .then(res => {
       setAnotherUser(res.data.data);
       if (anotherUser && anotherUser.profileImageUrl) {
-        setImgUrl(getImg(anotherUser.profileImageUrl));
+        setImgUrl(getImg(anotherUser.profileImageUrl.replace(process.env.REACT_APP_S3_BUCKET_URL, "")));
       } else {
         setImgUrl(getImg("test/loopy-goonchim.png"));
       }

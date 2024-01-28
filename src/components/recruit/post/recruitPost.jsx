@@ -33,6 +33,16 @@ const RecruitPost = () => {
   }, [accessToken])
 
   const save = () => {
+    if (title.length > 30) {
+      alertify.error("게시글 제목은 30글자 이내로 작성해주세요.", "1.2");
+      return;
+    }
+
+    if (content.length > 1500) {
+      alertify.error("게시글 내용은 1500글자 이내로 작성해주세요.", "1.2");
+      return;
+    }
+
     const jobLimits = []
     headcounts.map((headcount, idx) => {
       if (headcount) {
