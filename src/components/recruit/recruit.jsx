@@ -60,7 +60,11 @@ const Recruit = () => {
     console.log(type, skill, job)
     getPosts(type, skill, job, accessToken, refreshToken)
     .then(res => {
-      setPostList(res.data.data.postAllReadRes);
+      // TODO fix return null
+      console.log(res.data.data)
+      if (res.data.data) {
+        setPostList(res.data.data.postAllReadRes);
+      }
     })
     .catch(err => {
       console.error(err)

@@ -89,18 +89,21 @@
       padding: 20px;
 
       .jobLimits {
+        min-width: 200px;
         .jobLimit {
 
         }
       }
 
       .skills {
+        min-width: 200px;
         .skill {
 
         }
       }
 
       .members {
+        min-width: 200px;
         .member {
           cursor: pointer;
         }

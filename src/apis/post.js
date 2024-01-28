@@ -44,9 +44,9 @@ const deletePost = (postId, accessToken, refreshToken) => {
   })
 }
 
-const likePost = (data, accessToken, refreshToken) => {
+const likePost = (postId, accessToken, refreshToken) => {
   return instance.post('/v1/posts/like', {
-    postLikeReq: data
+    postId: postId
   }, {
     headers: {
       AccessToken: accessToken,
@@ -55,10 +55,11 @@ const likePost = (data, accessToken, refreshToken) => {
   })
 }
 
-const unlikePost = (data, accessToken, refreshToken) => {
-  return instance.post('/v1/posts/unlike', {
-    postUnlikeReq: data
-  }, {
+const unlikePost = (postId, accessToken, refreshToken) => {
+  return instance.delete('/v1/posts/unlike', {
+    data: {
+      postId: postId
+    },
     headers: {
       AccessToken: accessToken,
       RefreshToken: refreshToken

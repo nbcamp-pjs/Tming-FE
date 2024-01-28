@@ -5,7 +5,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {useRecoilState} from "recoil";
 import {accessTokenState, refreshTokenState, userState} from "../../../states";
-import {deletePost, getPost} from "../../../apis/post";
+import {deletePost, getPost, likePost, unlikePost} from "../../../apis/post";
 import {getImg} from "../../../apis/awss3";
 import {
   deleteComment,
@@ -146,6 +146,40 @@ const RecruitDetails = () => {
     </div>
   }
 
+  const pushLike = () => {
+    likePost(postId, accessToken, refreshToken)
+    .then(res => {
+      if (res.data.code === 0) {
+        alertify.success(res.data.message, "1.2");
+        window.location.reload();
+      }
+      else {
+        alertify.error(res.data.message, "1.2");
+      }
+    })
+  }
+
+  const pushUnlike = () => {
+    unlikePost(postId, accessToken, refreshToken)
+    .then(res => {
+      if (res.data.code === 0) {
+        alertify.success(res.data.message, "1.2");
+        window.location.reload();
+      }
+      else {
+        alertify.error(res.data.message, "1.2");
+      }
+    })
+  }
+
+  const getLikeBtn = () => {
+    return <button onClick={pushLike}>좋아요</button>
+  }
+
+  const getUnlikeBtn = () => {
+    return <button onClick={pushUnlike}>좋아요 취소</button>
+  }
+
   const onChangeWritingCommentContent = (e) => {
     setCommentContent(e.target.value);
   }
@@ -207,7 +241,7 @@ const RecruitDetails = () => {
                 {post && post.status}
               </div>
               <div>
-                좋아요 수: {post && post.like}
+                좋아요: {post && post.like}
               </div>
             </div>
           </div>
@@ -229,15 +263,16 @@ const RecruitDetails = () => {
               ))}
             </div>
             <div className={styles.members}>
-              모집된 인원
-              {post && post.members.map((member, idx) => (
+              모집된 인원<br/>
+              {post && post.members.length? post.members.map((member, idx) => (
                   <div key={idx} className={styles.member} onClick={() => getProfilePage(member.userId)}>
                     <img src={memberImgUrls[idx]} width='30px'/>
                   </div>
-              ))}
+              )): "없음"}
             </div>
           </div>
           <div className={styles.applyArea}>
+            {post && !post.liked? getLikeBtn(): getUnlikeBtn()}
             {isOpenApplicantModal && <Applicant postId={postId} jobLimits={post.jobLimits} isOpen={isOpenApplicantModal} close={closeApplicantModal}/>}
             {isOpenMemberModal && <Member postId={postId} isOpen={isOpenMemberModal} close={closeMemberModal}/>}
             {post && user.username !== post.username? getApplicantBtn(): getMemberBtn()}
