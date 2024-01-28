@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {accessTokenState} from "../states";
 
 const instance = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
@@ -90,6 +91,18 @@ const getPost = (postId, accessToken, refreshToken) => {
   })
 }
 
+const updatePostStatus = (postId, status, accessToken, refreshToken) => {
+  return instance.patch('/v1/posts/status', {
+    postId: postId,
+    status: status
+  }, {
+    headers: {
+      AccessToken: accessToken,
+      RefreshToken: refreshToken
+    }
+  })
+}
+
 export {
   savePost,
   updatePost,
@@ -98,4 +111,5 @@ export {
   unlikePost,
   getPosts,
   getPost,
+  updatePostStatus,
 }

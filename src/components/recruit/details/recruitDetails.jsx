@@ -5,7 +5,13 @@ import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {useRecoilState} from "recoil";
 import {accessTokenState, refreshTokenState, userState} from "../../../states";
-import {deletePost, getPost, likePost, unlikePost} from "../../../apis/post";
+import {
+  deletePost,
+  getPost,
+  likePost,
+  unlikePost,
+  updatePostStatus
+} from "../../../apis/post";
 import {getImg} from "../../../apis/awss3";
 import {
   deleteComment,
@@ -180,6 +186,27 @@ const RecruitDetails = () => {
     return <button onClick={pushUnlike}>좋아요 취소</button>
   }
 
+  const modifyPostStatus = (status) => {
+    updatePostStatus(postId, status, accessToken, refreshToken)
+    .then(res => {
+      if (res.data.code === 0) {
+        alertify.success(res.data.message, "1.2");
+        window.location.reload();
+      }
+      else {
+        alertify.error(res.data.message, "1.2");
+      }
+    })
+  }
+  
+  const getRecruited = () => {
+    return <button onClick={() => modifyPostStatus("CLOSED")}>모집 완료</button>
+  }
+  
+  const getRecruiting = () => {
+    return <button onClick={() => modifyPostStatus("OPEN")}>모집 완료 취소</button>
+  }
+
   const onChangeWritingCommentContent = (e) => {
     setCommentContent(e.target.value);
   }
@@ -272,6 +299,7 @@ const RecruitDetails = () => {
             </div>
           </div>
           <div className={styles.applyArea}>
+            {(post && user.username === post.username) && (post.status === "모집중"? getRecruited(): getRecruiting())}
             {post && !post.liked? getLikeBtn(): getUnlikeBtn()}
             {isOpenApplicantModal && <Applicant postId={postId} jobLimits={post.jobLimits} isOpen={isOpenApplicantModal} close={closeApplicantModal}/>}
             {isOpenMemberModal && <Member postId={postId} isOpen={isOpenMemberModal} close={closeMemberModal}/>}
