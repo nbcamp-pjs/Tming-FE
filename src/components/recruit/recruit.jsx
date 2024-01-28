@@ -85,7 +85,6 @@ const Recruit = () => {
 
   return (
       <div className={styles.wrapper}>
-        <h1>아 프론트 하기 싫다</h1>
         <div className={styles.filtering}>
           <div className={styles.type}>
             <select value={type} onChange={onChangeType}>
