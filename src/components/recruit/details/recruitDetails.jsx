@@ -22,6 +22,7 @@ import {
 import Applicant from "./applicant/applicant";
 import Member from "./member/member";
 import {deleteApplicant} from "../../../apis/applicant";
+import DeleteMember from "./member/delete/deleteMember";
 
 const RecruitDetails = () => {
   const params = useParams();
@@ -43,6 +44,7 @@ const RecruitDetails = () => {
 
   const [isOpenApplicantModal, setIsOpenApplicantModal] = useState(false)
   const [isOpenMemberModal, setIsOpenMemberModal] = useState(false)
+  const [isOpenDelMemberModal, setIsOpenDelMemberModal] = useState(false)
 
   useEffect(() => {
     if (!accessToken) {
@@ -236,12 +238,24 @@ const RecruitDetails = () => {
     setIsOpenMemberModal(true);
   }
 
+  const delMember = () => {
+    setIsOpenDelMemberModal(true);
+  }
+
+  const delMemberBtn = () => {
+    return <button onClick={delMember}>멤버 방출</button>
+  }
+
   const closeApplicantModal = () => {
     setIsOpenApplicantModal(false)
   }
 
   const closeMemberModal = () => {
     setIsOpenMemberModal(false)
+  }
+
+  const closeDelMemberModal = () => {
+    setIsOpenDelMemberModal(false)
   }
 
   const getApplicantBtn = () => {
@@ -328,7 +342,9 @@ const RecruitDetails = () => {
             {post && !post.liked? getLikeBtn(): getUnlikeBtn()}
             {isOpenApplicantModal && <Applicant postId={postId} jobLimits={post.jobLimits} isOpen={isOpenApplicantModal} close={closeApplicantModal}/>}
             {isOpenMemberModal && <Member postId={postId} isOpen={isOpenMemberModal} close={closeMemberModal}/>}
+            {isOpenDelMemberModal && <DeleteMember postId={postId} members={post.members} isOpen={isOpenDelMemberModal} close={closeDelMemberModal} />}
             {(post && user && post.status === "모집중") && (user.username !== post.username? getApplicantBtn(): getMemberBtn())}
+            {post && user && user.username === post.username && delMemberBtn()}
             {post && user && user.username === post.username && delPostBtn()}
           </div>
           <div className={styles.commentArea}>
