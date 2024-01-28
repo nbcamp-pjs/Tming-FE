@@ -21,6 +21,7 @@ import {
 } from "../../../apis/comment";
 import Applicant from "./applicant/applicant";
 import Member from "./member/member";
+import {deleteApplicant} from "../../../apis/applicant";
 
 const RecruitDetails = () => {
   const params = useParams();
@@ -219,6 +220,18 @@ const RecruitDetails = () => {
     setIsOpenApplicantModal(true);
   }
 
+  const cancelApplicant = (applicantId) => {
+    deleteApplicant(applicantId, accessToken, refreshToken)
+    .then(res => {
+      if (res.data.code === 0) {
+        alertify.success('신청이 삭제되었습니다.', '1.2');
+        window.location.reload();
+      } else {
+        alertify.error(res.data.message, '1.2');
+      }
+    })
+  }
+
   const pushMemberBtn = () => {
     setIsOpenMemberModal(true);
   }
@@ -232,7 +245,15 @@ const RecruitDetails = () => {
   }
 
   const getApplicantBtn = () => {
-    return <button onClick={pushApplicantBtn}>신청하기</button>
+    if (post && post.approval) {
+      return;
+    }
+
+    if (!post || !post.applicantId) {
+      return <button onClick={pushApplicantBtn}>신청하기</button>
+    }
+
+    return <button onClick={cancelApplicant}>신청 취소하기</button>
   }
 
   const getMemberBtn = () => {
@@ -303,7 +324,6 @@ const RecruitDetails = () => {
             </div>
           </div>
           <div className={styles.applyArea}>
-            {/*TODO add cancel applicant if applied team or joined member*/}
             {(post && user && user.username === post.username) && (post.status === "모집중"? getRecruited(): getRecruiting())}
             {post && !post.liked? getLikeBtn(): getUnlikeBtn()}
             {isOpenApplicantModal && <Applicant postId={postId} jobLimits={post.jobLimits} isOpen={isOpenApplicantModal} close={closeApplicantModal}/>}
