@@ -25,6 +25,7 @@ const Applicant = (props) => {
       if (res.data.code === 0) {
         alertify.success("신청이 완료되었습니다.", "1.2");
         close();
+        window.location.reload();
       } else {
         alertify.error(res.data.message, "1.2");
       }
