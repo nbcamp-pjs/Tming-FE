@@ -290,12 +290,16 @@ const RecruitDetails = () => {
               ))}
             </div>
             <div className={styles.members}>
-              모집된 인원<br/>
-              {post && post.members.length? post.members.map((member, idx) => (
-                  <div key={idx} className={styles.member} onClick={() => getProfilePage(member.userId)}>
-                    <img src={memberImgUrls[idx]} width='30px'/>
-                  </div>
-              )): "없음"}
+              <div className={styles.memberText}>
+                모집된 인원
+              </div>
+              <div className={styles.memberInfo}>
+                {post && post.members.length? post.members.map((member, idx) => (
+                    <div key={idx} className={styles.member} onClick={() => getProfilePage(member.userId)}>
+                      <img src={memberImgUrls[idx]} width='30px'/>
+                    </div>
+                )): "없음"}
+              </div>
             </div>
           </div>
           <div className={styles.applyArea}>
