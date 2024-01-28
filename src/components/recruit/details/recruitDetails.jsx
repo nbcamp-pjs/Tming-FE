@@ -5,7 +5,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {useRecoilState} from "recoil";
 import {accessTokenState, refreshTokenState, userState} from "../../../states";
-import {getPost} from "../../../apis/post";
+import {deletePost, getPost} from "../../../apis/post";
 import {getImg} from "../../../apis/awss3";
 import {
   deleteComment,
@@ -73,6 +73,23 @@ const RecruitDetails = () => {
       setComments(res.data.data.comments);
     })
   }, [])
+
+  const delPostBtn = () => {
+    return <button onClick={delPost}>삭제</button>
+  }
+
+  const delPost = () => {
+    deletePost(postId, accessToken, refreshToken)
+    .then(res => {
+      if(res.data.code === 0) {
+        alertify.success("삭제되었습니다.", "1.2");
+        navigate('/');
+      }
+      else {
+        alertify.error(res.data.message, "1.2");
+      }
+    })
+  }
 
   const getProfilePage = (userId) => {
     navigate('/profile/' + userId);
@@ -224,6 +241,7 @@ const RecruitDetails = () => {
             {isOpenApplicantModal && <Applicant postId={postId} jobLimits={post.jobLimits} isOpen={isOpenApplicantModal} close={closeApplicantModal}/>}
             {isOpenMemberModal && <Member postId={postId} isOpen={isOpenMemberModal} close={closeMemberModal}/>}
             {post && user.username !== post.username? getApplicantBtn(): getMemberBtn()}
+            {post && user.username === post.username && delPostBtn()}
           </div>
           <div className={styles.commentArea}>
             <div className={styles.inputComment}>

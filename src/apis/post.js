@@ -36,8 +36,7 @@ const deletePost = (postId, accessToken, refreshToken) => {
   return instance.delete('/v1/posts', {
     data: {
       postId: postId
-    }
-  }, {
+    },
     headers: {
       AccessToken: accessToken,
       RefreshToken: refreshToken
