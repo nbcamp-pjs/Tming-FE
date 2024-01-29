@@ -246,9 +246,8 @@ const RecruitDetails = () => {
     setIsOpenApplicantModal(true);
   }
 
-  const cancelApplicant = (applicantId) => {
-    // TODO fix error
-    deleteApplicant(applicantId, accessToken, refreshToken)
+  const cancelApplicant = () => {
+    deleteApplicant(postId, accessToken, refreshToken)
     .then(res => {
       if (res.data.code === 0) {
         alertify.success('신청이 삭제되었습니다.', '1.2');

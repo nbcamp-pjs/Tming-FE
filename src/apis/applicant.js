@@ -19,10 +19,10 @@ const saveApplicant = (postId, job, accessToken, refreshToken) => {
   })
 }
 
-const deleteApplicant = (applicantId, accessToken, refreshToken) => {
+const deleteApplicant = (postId, accessToken, refreshToken) => {
   return instance.delete('/v1/applicants', {
     data: {
-      applicantId: applicantId
+      postId: postId
     },
     headers: {
       AccessToken: accessToken,
