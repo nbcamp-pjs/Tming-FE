@@ -105,6 +105,11 @@ const RecruitDetails = () => {
   }
 
   const registerComment = () => {
+    if (commentContent.trim() === '') {
+      alertify.error("댓글 내용을 작성해주세요.", "1.2");
+      return;
+    }
+
     saveComment(postId, commentContent, accessToken, refreshToken)
     .then(res => {
       if (res.data.code === 0) {
@@ -119,17 +124,22 @@ const RecruitDetails = () => {
 
   const modifyComment = (idx, commentId, content) => {
     if (updatingCommentId === commentId) {
-     updateComment(commentId, updatedCommentContent, accessToken, refreshToken)
-     .then(res => {
-       if (res.data.code === 0) {
-         alertify.success("댓글이 수정되었습니다.", "1.2");
-         setUpdatedCommentContent('');
-         setUpdatingCommentId(-1);
-         window.location.reload();
-       } else {
-         alertify.error("알 수 없는 에러가 발생했습니다.<br/>다시 시도해주세요.", "1.2");
-       }
-     })
+      if (updatedCommentContent.trim() === '') {
+        alertify.error("댓글 내용을 작성해주세요.", "1.2");
+        return;
+      }
+
+      updateComment(commentId, updatedCommentContent, accessToken, refreshToken)
+      .then(res => {
+        if (res.data.code === 0) {
+          alertify.success("댓글이 수정되었습니다.", "1.2");
+          setUpdatedCommentContent('');
+          setUpdatingCommentId(-1);
+          window.location.reload();
+        } else {
+          alertify.error("알 수 없는 에러가 발생했습니다.<br/>다시 시도해주세요.", "1.2");
+        }
+      })
     } else {
       setUpdatingCommentId(commentId);
       setUpdatedCommentContent(content);

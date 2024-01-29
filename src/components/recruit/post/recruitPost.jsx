@@ -33,12 +33,12 @@ const RecruitPost = () => {
   }, [accessToken])
 
   const save = () => {
-    if (title.length > 30) {
+    if (!title.trim().length || title.length > 30) {
       alertify.error("게시글 제목은 30글자 이내로 작성해주세요.", "1.2");
       return;
     }
 
-    if (content.length > 1500) {
+    if (!content.trim().length || content.length > 1500) {
       alertify.error("게시글 내용은 1500글자 이내로 작성해주세요.", "1.2");
       return;
     }
@@ -52,6 +52,16 @@ const RecruitPost = () => {
         })
       }
     })
+
+    if (!jobLimits.length) {
+      alertify.error("최소 하나의 직군을 선택해주세요.", "1.2");
+      return;
+    }
+
+    if (!checkedSkills.size) {
+      alertify.error("최소 하나의 기술스택을 선택해주세요.", "1.2");
+      return;
+    }
 
     const formData = new FormData();
     deadline.setHours(23, 59, 59, 999);
