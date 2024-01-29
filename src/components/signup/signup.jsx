@@ -88,6 +88,11 @@ const Signup = () => {
       return;
     }
 
+    if (!validateUsername(username)) {
+      alertify.error("username은 4자 이상, 12자 이하인 대소문자, 숫자, 한글로 구성되어야 합니다.", "1.2");
+      return;
+    }
+
     checkUsername(username)
     .then(res => {
       if (res.data.data.check) {
