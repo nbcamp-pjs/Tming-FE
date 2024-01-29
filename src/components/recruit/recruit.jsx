@@ -34,7 +34,6 @@ const Recruit = () => {
 
     getPosts(type, skill, job, 1, size, accessToken, refreshToken)
     .then(res => {
-      console.log(res.data.data)
       setPostList(res.data.data.postAllReadRes);
       setOffset(res.data.data.pageNumber);
       setPages(res.data.data.totalPage);
