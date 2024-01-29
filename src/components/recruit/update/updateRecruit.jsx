@@ -72,8 +72,13 @@ const UpdateRecruit = (props) => {
       return;
     }
 
+    let flag = false;
     const jobLimits = []
     headcounts.map((headcount, idx) => {
+      if (headcount < 0 || headcount > 2147483647) {
+        flag = true;
+      }
+
       if (headcount) {
         jobLimits.push({
           job: jobs[idx].value,
@@ -81,6 +86,11 @@ const UpdateRecruit = (props) => {
         })
       }
     })
+
+    if (flag) {
+      alertify.error("모집 인원은 0명 이상, int 범위 내로 작성해주세요.", "1.2");
+      return;
+    }
 
     if (!jobLimits.length) {
       alertify.error("최소 하나의 직군을 선택해주세요.", "1.2");
