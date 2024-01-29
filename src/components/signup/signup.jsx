@@ -106,6 +106,11 @@ const Signup = () => {
       return;
     }
 
+    if (!validateEmail(email)) {
+      alertify.error("이메일 형식을 확인해주세요.", "1.2");
+      return;
+    }
+
     sendEmail(email)
     .then(res => {
       alertify.success("이메일이 전송되었습니다.<br/>인증번호를 입력해주세요.", "2");
@@ -120,6 +125,8 @@ const Signup = () => {
         alertify.success("확인되었습니다.", "1.2");
         setIsPossibleEmail(true);
         emailChkDisable.current.classList.add(styles.disabled);
+      } else {
+        alertify.error("인증번호를 확인해주세요.", "1.2");
       }
     })
   }
