@@ -67,12 +67,14 @@ const unlikePost = (postId, accessToken, refreshToken) => {
   })
 }
 
-const getPosts = (type, skill, job, accessToken, refreshToken) => {
+const getPosts = (type, skill, job, offset, size, accessToken, refreshToken) => {
   return instanceFormData.get('/v1/posts', {
     params: {
       type: type,
       skill: skill,
-      job: job
+      job: job,
+      offset: offset,
+      size: size
     },
     headers: {
       AccessToken: accessToken,

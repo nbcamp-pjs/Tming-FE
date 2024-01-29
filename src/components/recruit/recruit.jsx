@@ -6,7 +6,6 @@ import {useEffect, useRef, useState} from "react";
 import {getPosts} from "../../apis/post";
 import {useRecoilState} from "recoil";
 import {accessTokenState, refreshTokenState} from "../../states";
-import {getImg} from "../../apis/awss3";
 import {jobs} from "../../utils/jobs";
 import {skills} from "../../utils/skills";
 import {types} from "../../utils/types";
@@ -19,7 +18,8 @@ const Recruit = () => {
   const [skill, setSkill] = useState('')
   const [job, setJob] = useState('')
   const [offset, setOffset] = useState(1)
-  const [size, setSize] = useState(10)
+  const [pages, setPages] = useState(1)
+  const size = 10;
 
   const maxTitleLength = 15;
 
@@ -32,9 +32,12 @@ const Recruit = () => {
       navigate('/login');
     }
 
-    getPosts(type, skill, job, accessToken, refreshToken)
+    getPosts(type, skill, job, 1, size, accessToken, refreshToken)
     .then(res => {
+      console.log(res.data.data)
       setPostList(res.data.data.postAllReadRes);
+      setOffset(res.data.data.pageNumber);
+      setPages(res.data.data.totalPage);
     })
     .catch(err => {
       console.error(err)
@@ -56,12 +59,16 @@ const Recruit = () => {
     return <a href={`/post/${postId}`}>{getShortTitle(title)}</a>
   }
 
-  const clickSearchBtn = () => {
-    getPosts(type, skill, job, accessToken, refreshToken)
+  const clickSearchBtn = (page) => {
+    setOffset(page)
+    getPosts(type, skill, job, page, size, accessToken, refreshToken)
     .then(res => {
       // TODO fix return null
       if (res.data.data) {
         setPostList(res.data.data.postAllReadRes);
+        setPostList(res.data.data.postAllReadRes);
+        setOffset(res.data.data.pageNumber);
+        setPages(res.data.data.totalPage);
       }
     })
     .catch(err => {
@@ -80,6 +87,28 @@ const Recruit = () => {
   const onChangeJob = (e) => {
     setJob(e.target.value);
   }
+
+  const max = (x, y) => {
+    if (x > y) return x;
+    return y;
+  }
+
+  const min = (x, y) => {
+    if (x < y) return x;
+    return y;
+  }
+
+  const generateNumbers = () => {
+    const numbers = [];
+    const l = max(1, offset-1);
+    const r = min(pages, offset+1);
+
+    for (let i = l; i <= r; i++) {
+      numbers.push(i);
+    }
+
+    return numbers;
+  };
 
   return (
       <div className={styles.wrapper}>
@@ -108,7 +137,7 @@ const Recruit = () => {
               })}
             </select>
           </div>
-          <button onClick={clickSearchBtn}>검색</button>
+          <button onClick={() => clickSearchBtn(1)}>검색</button>
         </div>
         <div className={styles.postList}>
           <table className={styles.table}>
@@ -135,6 +164,20 @@ const Recruit = () => {
           </table>
         </div>
         {/*TODO add page info*/}
+        <div className={styles.pages}>
+          <button className={styles.page} onClick={() => clickSearchBtn(1)}>첫 페이지</button>
+          {generateNumbers().map((number, idx) => (
+              <button
+                  key={idx}
+                  className={styles.page}
+                  onClick={() => clickSearchBtn(number)}
+                  style={number === offset? {fontWeight: 900}: {}}
+              >
+                {number}
+              </button>
+          ))}
+          <button className={styles.page} onClick={() => clickSearchBtn(max(1, pages))}>마지막 페이지</button>
+        </div>
         <div className={styles.btns}>
           <button className={styles.btn} onClick={goToPost}>모집글 작성</button>
         </div>

@@ -113,6 +113,17 @@
     }
   }
 
+  .pages {
+    height: 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+
+    .page {
+      height: 100%;
+    }
+  }
+
   .btns {
     .btn {
 
