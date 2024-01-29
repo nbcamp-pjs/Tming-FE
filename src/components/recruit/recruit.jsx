@@ -58,6 +58,10 @@ const Recruit = () => {
     return <a href={`/post/${postId}`}>{getShortTitle(title)}</a>
   }
 
+  const getHostProfile = (userId, username) => {
+    return <a href={`/profile/${userId}`}>{username}</a>
+  }
+
   const clickSearchBtn = (page) => {
     setOffset(page)
     getPosts(type, skill, job, page, size, accessToken, refreshToken)
@@ -156,7 +160,7 @@ const Recruit = () => {
                     <td className={styles.title}>{getPostLink(post.postId, post.title)}</td>
                     <td className={styles.deadline}>{post.deadline}</td>
                     <td className={styles.status}>{post.status}</td>
-                    <td className={styles.username}>{post.username}</td>
+                    <td className={styles.username}>{getHostProfile(post.userId, post.username)}</td>
                   </tr>
               ))}
             </tbody>

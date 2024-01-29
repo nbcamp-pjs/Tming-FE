@@ -298,6 +298,10 @@ const RecruitDetails = () => {
     return <button onClick={pushMemberBtn}>신청목록</button>
   }
 
+  const getHostProfile = (userId, username) => {
+    return <a href={`/profile/${userId}`}>{username}</a>
+  }
+
   return (
       <div className={styles.wrapper}>
         <div className={styles.realWrapper}>
@@ -306,7 +310,7 @@ const RecruitDetails = () => {
               제목: {post && post.title}
             </div>
             <div className={styles.username}>
-              작성자: {post && post.username}
+              작성자: {post && getHostProfile(post.userId, post.username)}
             </div>
           </div>
           <div className={styles.body}>

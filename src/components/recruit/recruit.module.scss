@@ -107,6 +107,16 @@
           .username {
             width: 100px;
             text-align: center;
+
+            a:-webkit-any-link {
+              color: $black;
+              cursor: pointer;
+              text-decoration: none;
+
+              &:hover {
+                color: $darkGray;
+              }
+            }
           }
         }
       }
