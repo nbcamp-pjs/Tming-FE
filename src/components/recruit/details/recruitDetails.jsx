@@ -23,6 +23,7 @@ import Applicant from "./applicant/applicant";
 import Member from "./member/member";
 import {deleteApplicant} from "../../../apis/applicant";
 import DeleteMember from "./member/delete/deleteMember";
+import UpdateRecruit from "../update/updateRecruit";
 
 const RecruitDetails = () => {
   const params = useParams();
@@ -45,6 +46,8 @@ const RecruitDetails = () => {
   const [isOpenApplicantModal, setIsOpenApplicantModal] = useState(false)
   const [isOpenMemberModal, setIsOpenMemberModal] = useState(false)
   const [isOpenDelMemberModal, setIsOpenDelMemberModal] = useState(false)
+
+  const [isUpdating, setIsUpdating] = useState(false)
 
   useEffect(() => {
     if (!accessToken) {
@@ -82,8 +85,16 @@ const RecruitDetails = () => {
     })
   }, [])
 
-  const delPostBtn = () => {
-    return <button onClick={delPost}>삭제</button>
+  const closeIsUpdating = () => {
+    setIsUpdating(false);
+  }
+
+  const modifyPost = () => {
+    setIsUpdating(true);
+  }
+
+  const modifyPostBtn = () => {
+    return <button onClick={modifyPost}>모집글 수정</button>
   }
 
   const delPost = () => {
@@ -97,6 +108,10 @@ const RecruitDetails = () => {
         alertify.error(res.data.message, "1.2");
       }
     })
+  }
+
+  const delPostBtn = () => {
+    return <button onClick={delPost}>모집글 삭제</button>
   }
 
   const getProfilePage = (userId) => {
@@ -232,6 +247,7 @@ const RecruitDetails = () => {
   }
 
   const cancelApplicant = (applicantId) => {
+    // TODO fix error
     deleteApplicant(applicantId, accessToken, refreshToken)
     .then(res => {
       if (res.data.code === 0) {
@@ -352,8 +368,10 @@ const RecruitDetails = () => {
             {isOpenApplicantModal && <Applicant postId={postId} jobLimits={post.jobLimits} isOpen={isOpenApplicantModal} close={closeApplicantModal}/>}
             {isOpenMemberModal && <Member postId={postId} isOpen={isOpenMemberModal} close={closeMemberModal}/>}
             {isOpenDelMemberModal && <DeleteMember postId={postId} members={post.members} isOpen={isOpenDelMemberModal} close={closeDelMemberModal} />}
+            {isUpdating && <UpdateRecruit post={post} close={closeIsUpdating}/>}
             {(post && user && post.status === "모집중") && (user.username !== post.username? getApplicantBtn(): getMemberBtn())}
             {post && user && user.username === post.username && delMemberBtn()}
+            {post && user && user.username === post.username && modifyPostBtn()}
             {post && user && user.username === post.username && delPostBtn()}
           </div>
           <div className={styles.commentArea}>
