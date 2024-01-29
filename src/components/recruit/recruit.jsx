@@ -57,11 +57,9 @@ const Recruit = () => {
   }
 
   const clickSearchBtn = () => {
-    console.log(type, skill, job)
     getPosts(type, skill, job, accessToken, refreshToken)
     .then(res => {
       // TODO fix return null
-      console.log(res.data.data)
       if (res.data.data) {
         setPostList(res.data.data.postAllReadRes);
       }

@@ -24,7 +24,6 @@ const Profile = () => {
     getUserProfile(userId, accessToken, refreshToken)
     .then(res => {
       setAnotherUser(() => res.data.data);
-      console.log(res.data.data.profileImageUrl)
       if (res.data.data && res.data.data.profileImageUrl) {
         setImgUrl(() => getImg(res.data.data.profileImageUrl));
       } else {

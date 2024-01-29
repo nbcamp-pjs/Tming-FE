@@ -46,7 +46,6 @@ const Member = (props) => {
   }, [])
 
   const applyMember = (userId, job) => {
-    console.log(userId)
     jobs.map((j, idx) => {
       if (j.title === job) {
         job = j.value;
@@ -55,7 +54,6 @@ const Member = (props) => {
 
     saveMember(userId, postId, job, accessToken, refreshToken)
     .then(res => {
-      console.log(res);
       if (res.data.code === 0) {
         alertify.success("승인되었습니다.", "1.2");
         window.location.reload();

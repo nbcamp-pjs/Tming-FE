@@ -90,7 +90,6 @@ const Signup = () => {
 
     checkUsername(username)
     .then(res => {
-      console.log(res)
       if (res.data.data.check) {
         alertify.success("확인되었습니다.", "1.2");
         setIsPossibleUsername(true);

@@ -37,7 +37,6 @@ const Login = () => {
       setUserId(res1.data.data.userId)
     })
     .catch(err => {
-      console.log(err)
       alertify.error("계정을 확인해주세요.", "1.2");
     })
     .finally(() => {

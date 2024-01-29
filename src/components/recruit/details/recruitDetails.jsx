@@ -54,7 +54,6 @@ const RecruitDetails = () => {
 
     getPost(postId, accessToken, refreshToken)
     .then(res => {
-      console.log(res.data)
       if (res.data.code === 4002) {
         alertify.error(res.data.message, "1.2");
         navigate('/');
