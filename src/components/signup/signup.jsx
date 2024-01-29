@@ -22,6 +22,7 @@ const Signup = () => {
 
   const emailChkDisable = useRef(null)
   const usernameChkDisable = useRef(null)
+  const emailConfirmDisable = useRef(null)
   const checkDisable = useRef(null)
   const btnDisable = useRef(null)
 
@@ -124,11 +125,16 @@ const Signup = () => {
   }
 
   const checkEmailCheck = () => {
+    if (isPossibleEmail) {
+      return;
+    }
+
     verifyEmail(email, authNumber)
     .then(res => {
       if (res.data.data.success) {
         alertify.success("확인되었습니다.", "1.2");
         setIsPossibleEmail(true);
+        emailConfirmDisable.current.classList.add(styles.disabled);
         emailChkDisable.current.classList.add(styles.disabled);
       } else {
         alertify.error("인증번호를 확인해주세요.", "1.2");
@@ -170,7 +176,7 @@ const Signup = () => {
           </div>
           <div ref={checkDisable} className={`${styles.email} ${styles.hide}`}>
             <input type="text" onChange={onChangeEmailCheck} value={authNumber} placeholder={"인증번호"}/>
-            <button className={styles.btn} onClick={checkEmailCheck}>확인</button>
+            <button ref={emailConfirmDisable} className={styles.btn} onClick={checkEmailCheck}>확인</button>
           </div>
           <div className={styles.password}>
             <input type="password" onChange={onChangePassword} value={password} placeholder={"password"}/>
