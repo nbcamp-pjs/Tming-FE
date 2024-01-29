@@ -7,6 +7,13 @@ const instance = axios.create({
   }
 })
 
+const instanceFormData = axios.create({
+  baseURL: process.env.REACT_APP_API_URL,
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  }
+})
+
 const checkEmail = (email) => {
   return instance.post('/v1/users/check-email', {
     email: email
@@ -53,13 +60,8 @@ const getUserProfile = (userId, accessToken, refreshToken) => {
   });
 }
 
-const updateUser = (password, username, job, introduce, accessToken, refreshToken) => {
-  return instance.patch('/v1/users', {
-    password: password,
-    username: username,
-    job: job,
-    introduce: introduce
-  }, {
+const updateUser = (formData, accessToken, refreshToken) => {
+  return instanceFormData.patch('/v1/users', formData, {
     headers: {
       AccessToken: accessToken,
       RefreshToken: refreshToken

@@ -1,12 +1,13 @@
 import styles from './profile.module.scss';
 import alertify from "alertifyjs";
 import 'alertifyjs/build/css/alertify.css';
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {followUser, getUserProfile, unfollowUser} from "../../apis/user";
 import {useRecoilState} from "recoil";
 import {accessTokenState, refreshTokenState, userState} from "../../states";
 import {getImg} from "../../apis/awss3";
+import UpdateProfile from "./update/updateProfile";
 
 const Profile = () => {
   const params = useParams();
@@ -17,14 +18,17 @@ const Profile = () => {
   const [refreshToken, setRefreshToken] = useRecoilState(refreshTokenState)
   const [imgUrl, setImgUrl] = useState('')
 
+  const [isUpdating, setIsUpdating] = useState(false)
+
   useEffect(() => {
     getUserProfile(userId, accessToken, refreshToken)
     .then(res => {
-      setAnotherUser(res.data.data);
-      if (anotherUser && anotherUser.profileImageUrl) {
-        setImgUrl(getImg(anotherUser.profileImageUrl.replace(process.env.REACT_APP_S3_BUCKET_URL, "")));
+      setAnotherUser(() => res.data.data);
+      console.log(res.data.data.profileImageUrl)
+      if (res.data.data && res.data.data.profileImageUrl) {
+        setImgUrl(() => getImg(res.data.data.profileImageUrl));
       } else {
-        setImgUrl(getImg("test/loopy-goonchim.png"));
+        setImgUrl(() => getImg("test/loopy-goonchim.png"));
       }
     })
   }, [])
@@ -67,6 +71,18 @@ const Profile = () => {
     </div>
   }
 
+  const closeIsUpdating = () => {
+    setIsUpdating(false);
+  }
+
+  const updateModal = () => {
+    setIsUpdating(true);
+  }
+
+  const updateBtn = () => {
+    return <button onClick={updateModal}>프로필 수정</button>
+  }
+
   return (
       <div className={styles.wrapper}>
         <div className={styles.profileWrapper}>
@@ -106,12 +122,10 @@ const Profile = () => {
                 </div>
               </div>
             </div>
-            {userId !== user.userId? showFollowDiv(): ''}
+            {user && userId !== user.userId && showFollowDiv()}
+            {isUpdating && <UpdateProfile user={user} close={closeIsUpdating}/>}
+            {user && userId === user.userId && updateBtn()}
           </div>
-        </div>
-        {/*===*/}
-        <div className={styles.posts}>
-          게시글 div
         </div>
       </div>
   )
