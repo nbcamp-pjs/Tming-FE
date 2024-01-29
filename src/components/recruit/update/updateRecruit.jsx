@@ -164,6 +164,28 @@ const UpdateRecruit = (props) => {
     };
   }
 
+  const getPrevImage = () => {
+    return <div className={styles.postImage} onClick={() => updateImgRef.current.click()}>
+      <img src={imgUrl} width='100px'/>
+      <input
+          id="profileImg"
+          type="file"
+          accept="image/*"
+          onChange={onChangeImage}
+          ref={updateImgRef}
+          style={{display:'none'}}/>
+    </div>
+  }
+
+  const getInputImage = () => {
+    return <input
+        id="profileImg"
+        type="file"
+        accept="image/*"
+        onChange={onChangeImage}
+        ref={updateImgRef}/>
+  }
+
   return (
       <div className={styles.wrapper}>
         <div className={styles.window}>
@@ -209,16 +231,7 @@ const UpdateRecruit = (props) => {
                     </div>
                 ))}
               </div>
-              <div className={styles.postImage} onClick={() => updateImgRef.current.click()}>
-                <img src={imgUrl} width='100px'/>
-                <input
-                    id="profileImg"
-                    type="file"
-                    accept="image/*"
-                    onChange={onChangeImage}
-                    ref={updateImgRef}
-                    style={{display:'none'}}/>
-              </div>
+              {post && post.imageUrl? getPrevImage(): getInputImage()}
             </div>
             <div className={styles.footer}>
               <button onClick={modifyPost}>수정하기</button>
