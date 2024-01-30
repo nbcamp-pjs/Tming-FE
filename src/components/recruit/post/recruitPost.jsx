@@ -46,7 +46,7 @@ const RecruitPost = () => {
     let flag = false;
     const jobLimits = []
     headcounts.map((headcount, idx) => {
-      if (headcount < 0 || headcount > 2147483647) {
+      if (headcount < 0 || headcount > 9) {
         flag = true;
       }
 
@@ -59,7 +59,7 @@ const RecruitPost = () => {
     })
 
     if (flag) {
-      alertify.error("모집 인원은 0명 이상, int 범위 내로 작성해주세요.", "1.2");
+      alertify.error("모집 인원은 0 ~ 9명 이내로 작성해주세요.", "1.2");
       return;
     }
 
