@@ -103,8 +103,8 @@ const Recruit = () => {
 
   const generateNumbers = () => {
     const numbers = [];
-    const l = max(1, offset-1);
-    const r = min(pages, offset+1);
+    const l = max(1, offset-4);
+    const r = min(pages, offset+4);
 
     for (let i = l; i <= r; i++) {
       numbers.push(i);
