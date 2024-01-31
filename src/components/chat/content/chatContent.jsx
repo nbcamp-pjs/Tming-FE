@@ -21,7 +21,6 @@ const ChatContent = (props) => {
   const [msg, setMsg] = useState('')
 
   useEffect(() => {
-    // TODO fix to wss://alpha.whenwheres.com/ws
     const clientData = new StompJs.Client({
       brokerURL: process.env.REACT_APP_BROKER_URL,
       connectHeaders: {
