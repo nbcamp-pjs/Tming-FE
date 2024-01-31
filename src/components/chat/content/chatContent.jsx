@@ -54,6 +54,12 @@ const ChatContent = (props) => {
 
     clientData.activate();
     setClient(clientData);
+
+    return () => {
+      if (client) {
+        client.deactivate();
+      }
+    };
   }, [roomId])
 
   useEffect(() => {
