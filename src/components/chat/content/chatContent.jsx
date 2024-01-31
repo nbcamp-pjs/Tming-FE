@@ -1,13 +1,13 @@
 import {useEffect, useRef, useState} from "react";
 import * as StompJs from "@stomp/stompjs";
 import {useRecoilState} from "recoil";
-import {accessTokenState, refreshTokenState, userState} from "../../states";
+import {accessTokenState, refreshTokenState, userState} from "../../../states";
 import alertify from "alertifyjs";
 import 'alertifyjs/build/css/alertify.css';
 import {useNavigate} from "react-router-dom";
 
-const Chat = () => {
-  const roomId = 1
+const ChatContent = (props) => {
+  const {roomId} = props
   const [client, setClient] = useState(null);
   const [chatList, setChatList] = useState([]);
 
@@ -44,8 +44,6 @@ const Chat = () => {
     if (!client) return;
 
     const debounce = setTimeout(() => {
-      console.log(client)
-      console.log(client.connected)
       if (!client.connected) {
         alertify.error('세션이 만료되었습니다.<br/>로그인 화면으로 돌아갑니다.', "1.2");
         client.deactivate();
@@ -60,7 +58,6 @@ const Chat = () => {
   }, [client])
 
   const callback = (res) => {
-    console.log(res)
     if (res.body) {
       let msg = JSON.parse(res.body);
       setChatList((chats) => [...chats, msg.content]);
@@ -80,7 +77,6 @@ const Chat = () => {
       content: msg
     }
 
-    console.log(msg)
     client.publish({
       destination: `/pub/chats/${roomId}`,
       body: JSON.stringify(chatReq)
@@ -96,9 +92,19 @@ const Chat = () => {
     setMsg(() => updatedValue);
   }
 
+  const onEnterKey = (e) => {
+    if (e.key !== "Enter") {
+      return;
+    }
+
+    if (e.key === "Enter") {
+      sendMessage();
+    }
+  }
+
   return (
       <div>
-        <input type="text" value={msg} onChange={onChangeMsg} />
+        <input type="text" value={msg} onChange={onChangeMsg} onKeyDown={onEnterKey}/>
         <button onClick={sendMessage}>send</button>
         {chatList && chatList.map((chat, idx) => (
             <div key={idx}>
@@ -109,4 +115,4 @@ const Chat = () => {
   )
 }
 
-export default Chat;
+export default ChatContent;

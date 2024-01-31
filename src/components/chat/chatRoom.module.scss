@@ -1,0 +1,12 @@
+@import '/src/style/constants';
+
+.wrapper {
+  width: 100%;
+  height: calculatePcVw(500px);
+  min-height: calc(100vh - 200px);
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: start;
+  gap: 100px;
+}
