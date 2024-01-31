@@ -65,10 +65,15 @@ const Chat = () => {
       let msg = JSON.parse(res.body);
       setChatList((chats) => [...chats, msg.content]);
     }
-    // setMsg('');
+    setMsg('');
   };
 
   const sendMessage = () => {
+    if (!msg || !msg.length) {
+      alertify.error('내용을 작성해주세요.', '1.2');
+      return;
+    }
+
     const chatReq = {
       roomId: 1,
       senderId: 1,
@@ -83,7 +88,12 @@ const Chat = () => {
   };
 
   const onChangeMsg = (e) => {
-    setMsg(e.target.value);
+    let updatedValue = e.target.value;
+    if (updatedValue && updatedValue.length > 100) {
+      alertify.error('메시지는 100자 이내로 작성해주세요.', '1.2');
+      updatedValue = updatedValue.slice(0, 100);
+    }
+    setMsg(() => updatedValue);
   }
 
   return (
