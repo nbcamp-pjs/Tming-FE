@@ -11,6 +11,7 @@ import {getRoom} from "../../../apis/chat";
 const ChatContent = (props) => {
   const {roomId, client, setClient} = props
   const [chatList, setChatList] = useState([]);
+  const [msgs, setMsgs] = useState(Array(2).fill(''))
 
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
   const [refreshToken, setRefreshToken] = useRecoilState(refreshTokenState)
@@ -18,8 +19,6 @@ const ChatContent = (props) => {
 
   const navigate = useNavigate()
   const DEBOUNCE_TIME = 1000;
-
-  const [msg, setMsg] = useState('')
 
   const chatRef = useRef(null)
 
@@ -87,8 +86,18 @@ const ChatContent = (props) => {
     if (res.body) {
       let msg = JSON.parse(res.body);
       setChatList((chats) => [...chats, {userId: msg.senderId, msg: msg.content}]);
+      if (msg.senderId === user.userId) {
+        setMsgs(prev => {
+          prev[0] = '';
+          return [...prev]
+        })
+      } else {
+        setMsgs(prev => {
+          prev[1] = '';
+          return [...prev]
+        })
+      }
     }
-    setMsg('');
   };
 
   const scrollToBottom = () => {
@@ -98,7 +107,7 @@ const ChatContent = (props) => {
   };
 
   const sendMessage = () => {
-    if (!msg || !msg.length) {
+    if (!msgs[0] || !msgs[0].length) {
       alertify.error('내용을 작성해주세요.', '1.2');
       return;
     }
@@ -106,7 +115,7 @@ const ChatContent = (props) => {
     const chatReq = {
       roomId: roomId,
       senderId: user.userId,
-      content: msg
+      content: msgs[0]
     }
 
     client.publish({
@@ -121,7 +130,10 @@ const ChatContent = (props) => {
       alertify.error('메시지는 100자 이내로 작성해주세요.', '1.2');
       updatedValue = updatedValue.slice(0, 100);
     }
-    setMsg(() => updatedValue);
+    setMsgs(prev => {
+      prev[0] = updatedValue;
+      return [...prev]
+    })
   }
 
   const onEnterKey = (e) => {
@@ -144,7 +156,7 @@ const ChatContent = (props) => {
           ))}
         </div>
         <div className={styles.typing}>
-          <input type="text" value={msg} onChange={onChangeMsg} onKeyDown={onEnterKey}/>
+          <input type="text" value={msgs[0]} onChange={onChangeMsg} onKeyDown={onEnterKey}/>
           <button onClick={sendMessage}>send</button>
         </div>
       </div>
