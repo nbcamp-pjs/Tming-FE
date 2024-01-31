@@ -8,6 +8,8 @@ import {accessTokenState, refreshTokenState} from "../../states";
 const ChatRoom = () => {
   const [rooms, setRooms] = useState([])
   const [selectedRoom, setSelectedRoom] = useState(-1)
+  const [clickedRoom, setClickedRoom] = useState(-1)
+
   const [client, setClient] = useState(null)
 
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
@@ -31,13 +33,21 @@ const ChatRoom = () => {
     setSelectedRoom(() => roomId);
   }
 
+  const clickRoom = (roomId) => {
+    setClickedRoom(() => roomId);
+  }
+
   return (
       <div className={styles.wrapper}>
         <div className={styles.rooms}>
           {rooms && rooms.map((room, idx) => (
-              <div key={idx} className={styles.room}>
+              <div
+                  key={idx}
+                  className={`${styles.room} ${clickedRoom === room.roomInfoRes.chatRoomId && styles.clicked}`}
+                  onClick={() => clickRoom(room.roomInfoRes.chatRoomId)}
+                  onDoubleClick={() => goToRoom(room.roomInfoRes.chatRoomId)}
+              >
                 {room.roomInfoRes.chatRoomName}
-                <button onClick={() => goToRoom(room.roomInfoRes.chatRoomId)}>입장</button>
               </div>
           ))}
         </div>
