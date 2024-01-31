@@ -1,3 +1,4 @@
+import styles from './chatContent.module.scss';
 import {useEffect, useRef, useState} from "react";
 import * as StompJs from "@stomp/stompjs";
 import {useRecoilState} from "recoil";
@@ -5,10 +6,10 @@ import {accessTokenState, refreshTokenState, userState} from "../../../states";
 import alertify from "alertifyjs";
 import 'alertifyjs/build/css/alertify.css';
 import {useNavigate} from "react-router-dom";
+import {getRoom} from "../../../apis/chat";
 
 const ChatContent = (props) => {
-  const {roomId} = props
-  const [client, setClient] = useState(null);
+  const {roomId, client, setClient} = props
   const [chatList, setChatList] = useState([]);
 
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
@@ -20,7 +21,23 @@ const ChatContent = (props) => {
 
   const [msg, setMsg] = useState('')
 
+  const chatRef = useRef(null)
+
   useEffect(() => {
+    getRoom(roomId, accessToken, refreshToken)
+    .then(res => {
+      if (res.data.data) {
+        const newArr = []
+        res.data.data.roomMessageResList.roomMessageRese.map((c, idx) => {
+          newArr.push({
+            userId: c.userId,
+            msg: c.content
+          })
+        })
+        setChatList(() => newArr)
+      }
+    })
+
     const clientData = new StompJs.Client({
       brokerURL: process.env.REACT_APP_BROKER_URL,
       connectHeaders: {
@@ -37,7 +54,7 @@ const ChatContent = (props) => {
 
     clientData.activate();
     setClient(clientData);
-  }, [])
+  }, [roomId])
 
   useEffect(() => {
     if (!client) return;
@@ -56,12 +73,22 @@ const ChatContent = (props) => {
     return () => clearTimeout(debounce);
   }, [client])
 
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatList])
+
   const callback = (res) => {
     if (res.body) {
       let msg = JSON.parse(res.body);
-      setChatList((chats) => [...chats, msg.content]);
+      setChatList((chats) => [...chats, {userId: msg.senderId, msg: msg.content}]);
     }
     setMsg('');
+  };
+
+  const scrollToBottom = () => {
+    if (chatRef.current) {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight;
+    }
   };
 
   const sendMessage = () => {
@@ -71,8 +98,8 @@ const ChatContent = (props) => {
     }
 
     const chatReq = {
-      roomId: 1,
-      senderId: 1,
+      roomId: roomId,
+      senderId: user.userId,
       content: msg
     }
 
@@ -102,14 +129,18 @@ const ChatContent = (props) => {
   }
 
   return (
-      <div>
-        <input type="text" value={msg} onChange={onChangeMsg} onKeyDown={onEnterKey}/>
-        <button onClick={sendMessage}>send</button>
-        {chatList && chatList.map((chat, idx) => (
-            <div key={idx}>
-              {chat}
-            </div>
-        ))}
+      <div className={styles.wrapper}>
+        <div ref={chatRef} className={styles.chats}>
+          {chatList && chatList.map((chat, idx) => (
+              <div key={idx} className={`${styles.chat} ${chat.userId === user.userId? styles.my: styles.another}`}>
+                {chat.userId} | {chat.msg}
+              </div>
+          ))}
+        </div>
+        <div className={styles.typing}>
+          <input type="text" value={msg} onChange={onChangeMsg} onKeyDown={onEnterKey}/>
+          <button onClick={sendMessage}>send</button>
+        </div>
       </div>
   )
 }

@@ -2,11 +2,36 @@
 
 .wrapper {
   width: 100%;
-  height: calculatePcVw(500px);
   min-height: calc(100vh - 200px);
   display: flex;
   flex-direction: row;
   justify-content: start;
   align-items: start;
-  gap: 100px;
+  gap: 10px;
+
+  .rooms {
+    width: 300px;
+    height: 500px;
+    min-height: calc(100vh - 200px);
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    overflow: scroll;
+    user-select: none;
+
+    .room {
+      width: 100%;
+      min-height: 100px;
+      border: 1px solid $darkGray;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+
+      &.selected {
+        background-color: $darkGray;
+      }
+    }
+  }
 }
