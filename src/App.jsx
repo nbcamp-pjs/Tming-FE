@@ -9,6 +9,7 @@ import ScrollToTop from "./utils/ScrollRestoration";
 import RecruitPost from "./components/recruit/post/recruitPost";
 import Profile from "./components/profile/profile";
 import RecruitDetails from "./components/recruit/details/recruitDetails";
+import Chat from "./components/chat/chat";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/login" element={<Login/>}></Route>
         <Route path="/signup" element={<Signup/>}></Route>
         <Route path="/profile/:userId" element={<Profile/>}></Route>
+        <Route path="/chat" element={<Chat/>}></Route>
       </Routes>
       <Footer/>
     </div>
