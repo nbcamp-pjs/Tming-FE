@@ -148,12 +148,14 @@ const ChatContent = (props) => {
 
   return (
       <div className={styles.wrapper}>
-        <div ref={chatRef} className={styles.chats}>
-          {chatList && chatList.map((chat, idx) => (
-              <div key={idx} className={`${styles.chat} ${chat.userId === user.userId? styles.my: styles.another}`}>
-                {chat.userId} | {chat.msg}
-              </div>
-          ))}
+        <div ref={chatRef} className={styles.scroll}>
+          <div className={styles.chats}>
+            {chatList && chatList.map((chat, idx) => (
+                <div key={idx} className={`${styles.chat} ${chat.userId === user.userId? styles.my: styles.another}`}>
+                  {chat.userId} | {chat.msg}
+                </div>
+            ))}
+          </div>
         </div>
         <div className={styles.typing}>
           <input type="text" value={msgs[0]} onChange={onChangeMsg} onKeyDown={onEnterKey}/>
