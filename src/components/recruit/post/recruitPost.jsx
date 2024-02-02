@@ -98,9 +98,6 @@ const RecruitPost = () => {
         navigate('/');
       }
     })
-    .catch(err => {
-      console.error(err);
-    })
   }
 
   const onChangeTitle = (e) => {

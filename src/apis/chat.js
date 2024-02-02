@@ -38,7 +38,7 @@ const getRoom = (roomId, accessToken, refreshToken) => {
 }
 
 const getRoomByUsers = (userId, accessToken, refreshToken) => {
-  return instance.get(`/v1/rooms`, {
+  return instance.get(`/v1/rooms/chat?receiverId=${userId}`, {
     headers: {
       AccessToken: accessToken,
       RefreshToken: refreshToken
@@ -50,4 +50,5 @@ export {
   saveChatRoom,
   getRooms,
   getRoom,
+  getRoomByUsers,
 }

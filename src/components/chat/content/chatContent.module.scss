@@ -18,22 +18,24 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    align-items: end;
+    align-items: center;
     overflow-y: scroll;
+    margin-top: 15px;
 
     .chats {
-      width: 100%;
+      width: 90%;
       min-height: 1px;
       display: flex;
       flex-direction: column;
       align-items: end;
-      gap: 10px;
+      gap: 20px;
 
       .chat {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: start;
         width: 100%;
+        gap: 10px;
 
         &.my {
           align-items: end;
@@ -41,6 +43,72 @@
 
         &.another {
           align-items: start;
+        }
+
+        .myProfile {
+          width: 200px;
+          display: flex;
+          flex-direction: row;
+          justify-content: end;
+
+          .image {
+            width: 10px;
+          }
+          .username {
+
+          }
+        }
+
+        .anotherProfile {
+          width: 200px;
+          display: flex;
+          flex-direction: row;
+          justify-content: start;
+
+          .image {
+            width: 10px;
+          }
+          .username {
+
+          }
+        }
+
+        .myContent {
+          width: 200px;
+          display: flex;
+          flex-direction: row;
+          justify-content: end;
+          align-items: end;
+          gap: 10px;
+
+          .time {
+
+          }
+
+          .msg {
+            background-color: $gray;
+            border-radius: 10px;
+            padding: 10px 20px;
+          }
+        }
+
+        .anotherContent {
+          width: 200px;
+          display: flex;
+          flex-direction: row-reverse;
+          justify-content: start;
+          align-items: end;
+          gap: 10px;
+
+          .time {
+
+          }
+
+          .msg {
+            background-color: $darkGray;
+            border-radius: 10px;
+            padding: 10px 20px;
+          }
         }
       }
     }
@@ -54,5 +122,6 @@
     align-items: end;
     border-top: 1px solid $defaultColor;
     padding: 10px 0;
+    margin-top: 15px;
   }
 }

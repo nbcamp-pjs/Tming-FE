@@ -152,7 +152,22 @@ const ChatContent = (props) => {
           <div className={styles.chats}>
             {chatList && chatList.map((chat, idx) => (
                 <div key={idx} className={`${styles.chat} ${chat.userId === user.userId? styles.my: styles.another}`}>
-                  {chat.userId} | {chat.msg}
+                  <div className={`${user && user.userId === chat.userId? styles.myProfile: styles.anotherProfile}`}>
+                    <div className={styles.image}>
+                      s
+                    </div>
+                    <div className={styles.username}>
+                      {chat.userId}
+                    </div>
+                  </div>
+                  <div className={`${user && user.userId === chat.userId? styles.myContent: styles.anotherContent}`}>
+                    <div className={styles.time}>
+                      15:23
+                    </div>
+                    <div className={styles.msg}>
+                      {chat.msg}
+                    </div>
+                  </div>
                 </div>
             ))}
           </div>

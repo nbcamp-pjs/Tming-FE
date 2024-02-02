@@ -38,9 +38,6 @@ const Recruit = () => {
       setOffset(res.data.data.pageNumber);
       setPages(res.data.data.totalPage);
     })
-    .catch(err => {
-      console.error(err)
-    })
   }, [])
 
   const goToPost = () => {
@@ -73,9 +70,6 @@ const Recruit = () => {
         setOffset(res.data.data.pageNumber);
         setPages(res.data.data.totalPage);
       }
-    })
-    .catch(err => {
-      console.error(err)
     })
   }
 

@@ -1,14 +1,20 @@
 import styles from './chatRoom.module.scss';
 import ChatContent from "./content/chatContent";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {getRooms} from "../../apis/chat";
 import {useRecoilState} from "recoil";
 import {accessTokenState, refreshTokenState} from "../../states";
+import {useLocation} from "react-router-dom";
 
 const ChatRoom = () => {
   const [rooms, setRooms] = useState([])
+  const location = useLocation();
+  const roomId = location.state?.roomId;
+
   const [selectedRoom, setSelectedRoom] = useState(-1)
   const [clickedRoom, setClickedRoom] = useState(-1)
+  const [selectedIdx, setSelectedIdx] = useState(-1)
+  const roomRef = useRef([])
 
   const [client, setClient] = useState(null)
 
@@ -16,14 +22,36 @@ const ChatRoom = () => {
   const [refreshToken, setRefreshToken] = useRecoilState(refreshTokenState)
 
   useEffect(() => {
+    if (selectedIdx === -1) return;
+
+    if (roomRef.current[selectedIdx]) {
+      roomRef.current[selectedIdx]?.scrollIntoView({behavior: 'smooth', block: 'start'});
+    }
+  }, [selectedIdx])
+
+  useEffect(() => {
+    if (roomId) {
+      setSelectedRoom(() => roomId);
+      setClickedRoom(() => roomId);
+    }
+
     getRooms(accessToken, refreshToken)
     .then(res => {
       if (res.data.code === 0) {
-        console.log(res.data.data)
         setRooms(res.data.data.roomGetAllReses)
       }
     })
   }, [])
+
+  useEffect(() => {
+    if (!rooms) return;
+
+    rooms.map((room, idx) => {
+      if (room.roomInfoRes.chatRoomId === roomId) {
+        setSelectedIdx(() => idx);
+      }
+    })
+  }, [rooms])
 
   useEffect(() => {
     if (client) client.deactivate();
@@ -40,16 +68,17 @@ const ChatRoom = () => {
   return (
       <div className={styles.wrapper}>
         <div className={styles.rooms}>
-          {rooms && rooms.map((room, idx) => (
+          {rooms && rooms.length? rooms.map((room, idx) => (
               <div
+                  ref={(el) => (roomRef.current[idx] = el)}
                   key={idx}
                   className={`${styles.room} ${clickedRoom === room.roomInfoRes.chatRoomId && styles.clicked}`}
                   onClick={() => clickRoom(room.roomInfoRes.chatRoomId)}
                   onDoubleClick={() => goToRoom(room.roomInfoRes.chatRoomId)}
               >
-                {room.roomInfoRes.chatRoomName}
+                {room.roomInfoRes.username} 님과의 채팅
               </div>
-          ))}
+          )): <div style={{position: 'absolute', width: '100%'}}>채팅방이 없습니다.<br/>상대방의 프로필에서 1:1 채팅하기를 눌러서 채팅해보세요!</div>}
         </div>
         {selectedRoom !== -1 && <ChatContent roomId={selectedRoom} client={client} setClient={setClient}/>}
       </div>

@@ -8,6 +8,7 @@ import {useRecoilState} from "recoil";
 import {accessTokenState, refreshTokenState, userState} from "../../states";
 import {getImg} from "../../apis/awss3";
 import UpdateProfile from "./update/updateProfile";
+import {getRoomByUsers} from "../../apis/chat";
 
 const Profile = () => {
   const params = useParams();
@@ -19,6 +20,8 @@ const Profile = () => {
   const [imgUrl, setImgUrl] = useState('')
 
   const [isUpdating, setIsUpdating] = useState(false)
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     getUserProfile(userId, accessToken, refreshToken)
@@ -82,6 +85,17 @@ const Profile = () => {
     return <button onClick={updateModal}>프로필 수정</button>
   }
 
+  const getChatRoom = () => {
+    getRoomByUsers(anotherUser.userId, accessToken, refreshToken)
+    .then(res => {
+      navigate('/chat', {state: {roomId: res.data.data.chatRoomId}});
+    })
+  }
+
+  const getChat = () => {
+    return <button onClick={getChatRoom}>1:1 채팅</button>
+  }
+
   return (
       <div className={styles.wrapper}>
         <div className={styles.profileWrapper}>
@@ -124,6 +138,7 @@ const Profile = () => {
             {user && userId !== user.userId && showFollowDiv()}
             {isUpdating && <UpdateProfile user={user} close={closeIsUpdating}/>}
             {user && userId === user.userId && updateBtn()}
+            {user && userId !== user.userId && getChat()}
           </div>
         </div>
       </div>

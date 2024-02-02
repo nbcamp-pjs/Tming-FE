@@ -16,6 +16,11 @@ const Header = () => {
     },
   ]
 
+  const chat = {
+    title: 'Chat',
+    path: '/chat'
+  }
+
   const myProfile = {
     title: 'Profile',
     path: '/profile/'
@@ -50,15 +55,19 @@ const Header = () => {
       setRefreshToken(null);
       navigate('/login')
     })
-    .catch(err => {
-      console.error(err);
-    })
   }
 
   const getProfilePage = () => {
     return <Link to={myProfile.path + user.userId} target={myProfile.target}
                  className={`${styles.navItem} ${isCurrentPage(myProfile.path) ? styles.current : ''}`}>
       {myProfile.title}
+    </Link>
+  }
+
+  const getChatPage = () => {
+    return <Link to={chat.path} target={chat.target}
+                 className={`${styles.navItem} ${isCurrentPage(chat.path) ? styles.current : ''} ${user==null && styles.disabled}`}>
+      {chat.title}
     </Link>
   }
 
@@ -86,6 +95,7 @@ const Header = () => {
                   {navItem.title}
                 </Link>
             ))}
+            {user != null && getChatPage()}
             {user == null? '': getProfilePage()}
             {user == null? getLoginPage(): getLogoutPage()}
           </div>
