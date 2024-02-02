@@ -16,6 +16,7 @@ const ChatContent = (props) => {
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
   const [refreshToken, setRefreshToken] = useRecoilState(refreshTokenState)
   const [user, setUser] = useRecoilState(userState)
+  const [anotherUser, setAnotherUser] = useState(null)
 
   const navigate = useNavigate()
   const DEBOUNCE_TIME = 1000;
@@ -34,6 +35,20 @@ const ChatContent = (props) => {
           })
         })
         setChatList(() => newArr)
+
+        if (res.data.data.roomUserInfoReses[0].userId === user.userId) {
+          const newAnotherUser = {
+            username: res.data.data.roomUserInfoReses[1].username,
+            imageUrl: res.data.data.roomUserInfoReses[1].imageUrl
+          }
+          setAnotherUser(() => newAnotherUser)
+        } else {
+          const newAnotherUser = {
+            username: res.data.data.roomUserInfoReses[0].username,
+            imageUrl: res.data.data.roomUserInfoReses[0].imageUrl
+          }
+          setAnotherUser(() => newAnotherUser)
+        }
       }
     })
 
@@ -153,11 +168,8 @@ const ChatContent = (props) => {
             {chatList && chatList.map((chat, idx) => (
                 <div key={idx} className={`${styles.chat} ${chat.userId === user.userId? styles.my: styles.another}`}>
                   <div className={`${user && user.userId === chat.userId? styles.myProfile: styles.anotherProfile}`}>
-                    <div className={styles.image}>
-                      s
-                    </div>
                     <div className={styles.username}>
-                      {chat.userId}
+                      {user && anotherUser && user.userId === chat.userId? user.username: anotherUser.username}
                     </div>
                   </div>
                   <div className={`${user && user.userId === chat.userId? styles.myContent: styles.anotherContent}`}>
