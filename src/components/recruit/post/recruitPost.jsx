@@ -141,7 +141,7 @@ const RecruitPost = () => {
             <input type="text" value={title} onChange={onChangeTitle} placeholder="모집글 제목을 작성해주세요."/>
           </div>
           <div className={styles.content}>
-            <input type="text" value={content} onChange={onChangeContent} placeholder="모집글 내용을 작성해주세요."/>
+            <textarea value={content} onChange={onChangeContent} placeholder={"모집글 내용을 작성해주세요."}/>
           </div>
           <div className={styles.deadline}>
             <DatePicker

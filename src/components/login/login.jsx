@@ -45,6 +45,16 @@ const Login = () => {
     })
   }
 
+  const onEnterKey = (e) => {
+    if (e.key !== "Enter") {
+      return;
+    }
+
+    if (e.key === "Enter") {
+      login();
+    }
+  }
+
   const signup = () => {
     navigate('/signup')
   }
@@ -61,10 +71,10 @@ const Login = () => {
       <div className={styles.wrapper}>
         <div className={styles.inputs}>
           <div className={styles.email}>
-            <input type="text" onChange={onChangeEmail} value={email} placeholder="email"/><br/>
+            <input type="text" onChange={onChangeEmail} value={email} placeholder="email" onKeyDown={onEnterKey}/><br/>
           </div>
           <div className={styles.password}>
-            <input type="password" onChange={onChangePassword} value={password} placeholder="password"/><br/>
+            <input type="password" onChange={onChangePassword} value={password} placeholder="password" onKeyDown={onEnterKey}/><br/>
           </div>
           <div className={styles.btns}>
             <button className={styles.btn} onClick={login}>로그인</button>
