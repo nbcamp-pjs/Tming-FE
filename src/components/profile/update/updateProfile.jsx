@@ -1,5 +1,5 @@
 import styles from './updateProfile.module.scss';
-import {Close} from "../../../assets";
+import {Close, LoopyGoonchim} from "../../../assets";
 import {jobs} from "../../../utils/jobs";
 import {useEffect, useRef, useState} from "react";
 import {getImg} from "../../../apis/awss3";
@@ -32,7 +32,7 @@ const UpdateProfile = (props) => {
     if (user && user.profileImageUrl) {
       setImgUrl(getImg(user.profileImageUrl));
     } else {
-      setImgUrl(getImg("test/loopy-goonchim.png"));
+      setImgUrl(LoopyGoonchim);
     }
 
     jobs.map((j, idx) => {

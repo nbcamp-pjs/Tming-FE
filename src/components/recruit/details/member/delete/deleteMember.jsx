@@ -1,7 +1,7 @@
 import styles from './deleteMember.module.scss';
 import alertify from "alertifyjs";
 import 'alertifyjs/build/css/alertify.css';
-import {Close} from "../../../../../assets";
+import {Close, LoopyGoonchim} from "../../../../../assets";
 import {useEffect, useState} from "react";
 import {getImg} from "../../../../../apis/awss3";
 import {useRecoilValue} from "recoil";
@@ -27,7 +27,7 @@ const DeleteMember = (props) => {
         newArr.push(getImg(member.profileImageUrl.replace(process.env.REACT_APP_S3_BUCKET_URL, "")))
       }
       else {
-        newArr.push(getImg("test/loopy-goonchim.png"));
+        newArr.push(LoopyGoonchim);
       }
     })
     setImgUrls(() => newArr);

@@ -9,6 +9,7 @@ import {accessTokenState, refreshTokenState, userState} from "../../states";
 import {getImg} from "../../apis/awss3";
 import UpdateProfile from "./update/updateProfile";
 import {getRoomByUsers} from "../../apis/chat";
+import {LoopyGoonchim} from "../../assets";
 
 const Profile = () => {
   const params = useParams();
@@ -30,7 +31,7 @@ const Profile = () => {
       if (res.data.data && res.data.data.profileImageUrl) {
         setImgUrl(() => getImg(res.data.data.profileImageUrl));
       } else {
-        setImgUrl(() => getImg("test/loopy-goonchim.png"));
+        setImgUrl(() => LoopyGoonchim);
       }
     })
     .catch(err => {

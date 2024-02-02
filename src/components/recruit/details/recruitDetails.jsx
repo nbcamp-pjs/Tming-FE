@@ -24,6 +24,7 @@ import Member from "./member/member";
 import {deleteApplicant} from "../../../apis/applicant";
 import DeleteMember from "./member/delete/deleteMember";
 import UpdateRecruit from "../update/updateRecruit";
+import {LoopyGoonchim} from "../../../assets";
 
 const RecruitDetails = () => {
   const params = useParams();
@@ -72,7 +73,7 @@ const RecruitDetails = () => {
             newArr.push(getImg(member.profileImageUrl.replace(process.env.REACT_APP_S3_BUCKET_URL, "")))
           }
           else {
-            newArr.push(getImg("test/loopy-goonchim.png"));
+            newArr.push(LoopyGoonchim);
           }
         })
         setMemberImgUrls(() => newArr);
