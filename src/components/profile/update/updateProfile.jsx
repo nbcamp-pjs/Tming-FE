@@ -15,7 +15,6 @@ const UpdateProfile = (props) => {
 
   const [job, setJob] = useState('')
   const [intro, setIntro] = useState('')
-  const [password, setPassword] = useState('')
   const [username, setUsername] = useState('')
 
   const imgRef = useRef()
@@ -26,7 +25,6 @@ const UpdateProfile = (props) => {
   const [refreshToken, setRefreshToken] = useRecoilState(refreshTokenState)
 
   const usernameRegex = /^[a-zA-Z0-9가-힣]{4,12}$/;
-  const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()-_+=])[A-Za-z\d!@#$%^&*()-_+=]{8,16}$/;
 
   useEffect(() => {
     if (user && user.profileImageUrl) {
@@ -61,18 +59,9 @@ const UpdateProfile = (props) => {
     return usernameRegex.test(username);
   }
 
-  const validatePassword = (password) => {
-    return passwordRegex.test(password);
-  }
-
   const modifyUser = () => {
     if (!validateUsername(username)) {
       alertify.error("username은 4자 이상, 12자 이하인 대소문자, 숫자, 한글로 구성되어야 합니다.", "1.2");
-      return;
-    }
-
-    if (!validatePassword(password)) {
-      alertify.error("password는 8자 이상, 16자 이하인 대소문자, 숫자, 특수문자를 모두 포함하여 구성되어야 합니다.", "1.2");
       return;
     }
 
@@ -84,7 +73,6 @@ const UpdateProfile = (props) => {
     const formData = new FormData();
     const data = {
       userId: user.userId,
-      password: password,
       username: username,
       job: job,
       introduce: intro,
@@ -128,10 +116,6 @@ const UpdateProfile = (props) => {
     setUsername(e.target.value);
   }
 
-  const onChangePassword = (e) => {
-    setPassword(e.target.value);
-  }
-
   return (
       <div className={styles.wrapper}>
         <div className={styles.window}>
@@ -156,9 +140,6 @@ const UpdateProfile = (props) => {
               </div>
               <div className={styles.username}>
                 <input type="text" value={username} onChange={onChangeUsername} placeholder="username"/>
-              </div>
-              <div className={styles.password}>
-                <input type="password" value={password} onChange={onChangePassword} placeholder="password"/>
               </div>
               <div className={styles.job}>
                 <select value={job} onChange={onChangeJob}>
