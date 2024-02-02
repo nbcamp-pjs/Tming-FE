@@ -3,11 +3,14 @@ import ChatContent from "./content/chatContent";
 import {useEffect, useRef, useState} from "react";
 import {getRooms} from "../../apis/chat";
 import {useRecoilState} from "recoil";
-import {accessTokenState, refreshTokenState} from "../../states";
-import {useLocation} from "react-router-dom";
+import {accessTokenState, refreshTokenState, userState} from "../../states";
+import {useLocation, useNavigate} from "react-router-dom";
+import alertify from "alertifyjs";
 
 const ChatRoom = () => {
   const [rooms, setRooms] = useState([])
+
+  const navigate = useNavigate()
   const location = useLocation();
   const roomId = location.state?.roomId;
 
@@ -18,6 +21,7 @@ const ChatRoom = () => {
 
   const [client, setClient] = useState(null)
 
+  const [user, setUser] = useRecoilState(userState)
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
   const [refreshToken, setRefreshToken] = useRecoilState(refreshTokenState)
 
@@ -40,6 +44,13 @@ const ChatRoom = () => {
       if (res.data.code === 0) {
         setRooms(res.data.data.roomGetAllReses)
       }
+    })
+    .catch(err => {
+      alertify.error("로그인 세션이 만료되었습니다.<br/>로그인 화면으로 이동합니다.")
+      setUser(null);
+      setAccessToken(null);
+      setRefreshToken(null);
+      navigate('/login');
     })
   }, [])
 

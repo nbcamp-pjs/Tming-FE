@@ -33,6 +33,13 @@ const Profile = () => {
         setImgUrl(() => getImg("test/loopy-goonchim.png"));
       }
     })
+    .catch(err => {
+      alertify.error("로그인 세션이 만료되었습니다.<br/>로그인 화면으로 이동합니다.")
+      setUser(null);
+      setAccessToken(null);
+      setRefreshToken(null);
+      navigate('/login');
+    })
   }, [])
 
   const clickFollowUser = () => {

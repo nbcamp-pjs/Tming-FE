@@ -78,10 +78,24 @@ const RecruitDetails = () => {
         setMemberImgUrls(() => newArr);
       }
     })
+    .catch(err => {
+      alertify.error("로그인 세션이 만료되었습니다.<br/>로그인 화면으로 이동합니다.")
+      setUser(null);
+      setAccessToken(null);
+      setRefreshToken(null);
+      navigate('/login');
+    })
 
     getComments(postId, accessToken, refreshToken)
     .then((res) => {
       setComments(res.data.data.comments);
+    })
+    .catch(err => {
+      alertify.error("로그인 세션이 만료되었습니다.<br/>로그인 화면으로 이동합니다.")
+      setUser(null);
+      setAccessToken(null);
+      setRefreshToken(null);
+      navigate('/login');
     })
   }, [])
 

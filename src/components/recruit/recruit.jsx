@@ -5,7 +5,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
 import {getPosts} from "../../apis/post";
 import {useRecoilState} from "recoil";
-import {accessTokenState, refreshTokenState} from "../../states";
+import {accessTokenState, refreshTokenState, userState} from "../../states";
 import {jobs} from "../../utils/jobs";
 import {skills} from "../../utils/skills";
 import {types} from "../../utils/types";
@@ -23,6 +23,7 @@ const Recruit = () => {
 
   const maxTitleLength = 15;
 
+  const [user, setUser] = useRecoilState(userState)
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState)
   const [refreshToken, setRefreshToken] = useRecoilState(refreshTokenState)
 
@@ -37,6 +38,13 @@ const Recruit = () => {
       setPostList(res.data.data.postAllReadRes);
       setOffset(res.data.data.pageNumber);
       setPages(res.data.data.totalPage);
+    })
+    .catch(err => {
+      alertify.error("로그인 세션이 만료되었습니다.<br/>로그인 화면으로 이동합니다.")
+      setUser(null);
+      setAccessToken(null);
+      setRefreshToken(null);
+      navigate('/login');
     })
   }, [])
 
