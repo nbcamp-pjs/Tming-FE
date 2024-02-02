@@ -8,6 +8,7 @@ $pc-body: 22px;
 $pc-footer: 12px;
 $pc-comment: 14px;
 $pc-comment-time: 12px;
+$pc-small-text: 11px;
 
 @function calculatePcVw($width) {
   @return #{$width / $pc-width * 100}vw;

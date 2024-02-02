@@ -31,7 +31,8 @@ const ChatContent = (props) => {
         res.data.data.roomMessageResList.roomMessageRese.map((c, idx) => {
           newArr.push({
             userId: c.userId,
-            msg: c.content
+            msg: c.content,
+            time: c.createTimestamp
           })
         })
         setChatList(() => newArr)
@@ -61,7 +62,6 @@ const ChatContent = (props) => {
       reconnectDelay: 5000,
     });
 
-    // 구독
     clientData.onConnect = () => {
       clientData.subscribe("/sub/v1/rooms/" + roomId, callback);
     };
@@ -100,7 +100,7 @@ const ChatContent = (props) => {
   const callback = (res) => {
     if (res.body) {
       let msg = JSON.parse(res.body);
-      setChatList((chats) => [...chats, {userId: msg.senderId, msg: msg.content}]);
+      setChatList((chats) => [...chats, {userId: msg.senderId, msg: msg.content, time: msg.createTimestamp}]);
       if (msg.senderId === user.userId) {
         setMsgs(prev => {
           prev[0] = '';
@@ -166,7 +166,7 @@ const ChatContent = (props) => {
         <div ref={chatRef} className={styles.scroll}>
           <div className={styles.chats}>
             {chatList && chatList.map((chat, idx) => (
-                <div key={idx} className={`${styles.chat} ${chat.userId === user.userId? styles.my: styles.another}`}>
+                <div key={idx} className={`${styles.chat} ${user && chat.userId === user.userId? styles.my: styles.another}`}>
                   <div className={`${user && user.userId === chat.userId? styles.myProfile: styles.anotherProfile}`}>
                     <div className={styles.username}>
                       {user && anotherUser && user.userId === chat.userId? user.username: anotherUser.username}
@@ -174,7 +174,7 @@ const ChatContent = (props) => {
                   </div>
                   <div className={`${user && user.userId === chat.userId? styles.myContent: styles.anotherContent}`}>
                     <div className={styles.time}>
-                      15:23
+                      {chat.time}
                     </div>
                     <div className={styles.msg}>
                       {chat.msg}

@@ -74,7 +74,7 @@
         }
 
         .myContent {
-          width: 200px;
+          width: 300px;
           display: flex;
           flex-direction: row;
           justify-content: end;
@@ -82,18 +82,22 @@
           gap: 10px;
 
           .time {
-
+            width: 200px;
+            font-size: $pc-small-text;
+            text-align: end;
           }
 
           .msg {
+            width: 200px;
             background-color: $gray;
             border-radius: 10px;
             padding: 10px 20px;
+            word-break:break-all;
           }
         }
 
         .anotherContent {
-          width: 200px;
+          width: 300px;
           display: flex;
           flex-direction: row-reverse;
           justify-content: start;
@@ -101,13 +105,17 @@
           gap: 10px;
 
           .time {
-
+            width: 200px;
+            font-size: $pc-small-text;
+            text-align: start;
           }
 
           .msg {
+            width: 200px;
             background-color: $darkGray;
             border-radius: 10px;
             padding: 10px 20px;
+            word-break:break-all;
           }
         }
       }
